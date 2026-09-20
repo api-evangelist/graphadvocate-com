@@ -1,0 +1,66 @@
+generated: '2026-09-19'
+method: derived
+format: x402-json
+source: >-
+  Derived from the responses declared in openapi/graphadvocate-com-openapi.yml (OpenAPI 3.1.0, 23 operations —
+  every operation declares exactly 200 and 402) and enriched from one live anonymous POST https://graphadvocate.com/route
+  on 2026-09-19 (HTTP 402, application/json, `payment-required` response header) plus the docs
+  (https://docs.graphadvocate.com/route, /quickstart, /x402). The spec declares no 4xx other than 402 and no 5xx.
+rfc9457: false
+envelope:
+  media_type: application/json
+  default_shape: '{ "x402Version": 2, "error": string, "description": string, "accepts": [PaymentRequirements], "output_example": object, "hint": string }'
+  header: 'payment-required: <base64 JSON of the same PaymentRequired object, x402 v2>'
+  note: >-
+    The 402 is not a failure in the usual sense — it is the price quote. An x402-aware client (x402 SDKs, @x402/fetch
+    wrapper, x402HttpxClient) reads `accepts[]`, signs a USDC transferWithAuthorization on Base and retries with an
+    X-PAYMENT header; the same body then returns a payload matching `output_example`.
+payment_requirements_shape:
+  fields:
+  - {name: scheme, type: string, example: exact}
+  - {name: network, type: string, example: 'eip155:8453'}
+  - {name: asset, type: string, example: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', description: USDC contract on Base}
+  - {name: amount, type: string, example: '10000', description: base units (6 decimals) — 10000 = $0.01}
+  - {name: payTo, type: string, description: recipient address — ALWAYS read from the live 402, never from a static file (provider's own instruction)}
+  - {name: maxTimeoutSeconds, type: integer, example: 300}
+  - {name: extra, type: object, example: '{name: USD Coin, version: "2"}'}
+problems:
+- status: 402
+  title: Payment required
+  applies_to: all 23 operations (routeQuery, agentScore, askSettlements, hyperliquid*, kalshi*, polymarket*, predmarketSpread, narrativeDivergence, onchainX402Address, uniswap*)
+  cause: >-
+    No valid X-PAYMENT header on an x402-gated endpoint. On /route this is also how the free tier ends: identified
+    senders get 3 routed queries/day at POST / (A2A); anonymous callers and all other paid endpoints get 402 from
+    call 1.
+  remediation: >-
+    Retry the identical request with an X-PAYMENT header produced by an x402 client for one of `accepts[]`; or,
+    for routing only, POST / over A2A with metadata.sender set to a 0x EVM address to use the free allowance.
+  observed:
+    url: https://graphadvocate.com/route
+    fetched: '2026-09-19'
+    http_status: 402
+    content_type: application/json
+    accepts: [{scheme: exact, network: 'eip155:8453', amount: '10000', maxTimeoutSeconds: 300}]
+- status: 405
+  title: Method Not Allowed
+  applies_to: GET on POST-only paths (observed on GET /feedback)
+  cause: Wrong HTTP method.
+  remediation: Use POST with a JSON body.
+  observed: {url: https://graphadvocate.com/feedback, http_status: 405, fetched: '2026-09-19'}
+  note: not declared in the spec; observed only
+- status: 404
+  title: Not Found
+  applies_to: unknown paths
+  cause: Plain-text "Not Found" body, 9 bytes.
+  observed: {url: https://graphadvocate.com/docs, http_status: 404, fetched: '2026-09-19'}
+  note: not declared in the spec; observed only
+- status: 401
+  title: Unauthorized (operator endpoints)
+  applies_to: GET /quality, GET /export/stats
+  cause: Operator-only endpoints require ADMIN_TOKEN (documented in llms.txt "401 without ADMIN_TOKEN"); not part of the public contract.
+  note: documented, not observed
+undeclared:
+  note: >-
+    The spec declares no 400/422 validation errors, no 429 and no 5xx. Rate-limit exhaustion on the free tier is
+    signalled as 402, not 429 (see rate-limits/). A JSON-RPC error object (code/message) is the failure shape on
+    POST / and POST /mcp, per JSON-RPC 2.0.

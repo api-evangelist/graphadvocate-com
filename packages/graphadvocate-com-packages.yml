@@ -1,0 +1,146 @@
+generated: '2026-09-19'
+method: searched
+source: >-
+  registry.npmjs.org/<pkg> and pypi.org/pypi/<pkg>/json metadata endpoints (unauthenticated, 2026-09-19), the
+  provider's docs page https://docs.graphadvocate.com/mcp-packages, GET https://graphadvocate.com/mcp/catalog, and
+  the GitHub account https://github.com/PaulieB14 (95 public repos).
+summary:
+  first_party_sdk_count: 8
+  third_party_package_count: 1
+  retired_package_count: 2
+  note: >-
+    Every package below is published by the same npm maintainer (`paulieb`) whose repositories live under
+    github.com/PaulieB14 — the account named as provider.organization in the A2A agent card — so official: true is
+    grounded in registry metadata, not inference. Two packages are the Graph Advocate client surface proper
+    (graph-advocate-mcp, langchain-graph-advocate); six are the protocol-specific MCP servers the router hands off
+    to, which the provider documents and catalogs as its own. Currency signal: the newest release is 2026-09-04
+    (graph-limitless-mcp) and the flagship graph-advocate-mcp last shipped 2026-08-13 — the stack is actively
+    maintained; graph-lending-mcp (2026-03-06) is the stalest.
+github_organization:
+  found: true
+  url: https://github.com/PaulieB14
+  note: personal account (bio "Graph Advocate", twitter graphtronauts_c), not an org; 95 public repos
+packages:
+- name: graph-advocate-mcp
+  registry: npm
+  url: https://www.npmjs.com/package/graph-advocate-mcp
+  metadata: https://registry.npmjs.org/graph-advocate-mcp
+  language: TypeScript/JavaScript
+  kind: mcp-server (stdio)
+  official: true
+  version: 2.11.1
+  published: '2026-08-13'
+  license: MIT
+  install: npx -y graph-advocate-mcp
+  repository: https://github.com/PaulieB14/graph-advocate
+  description: >-
+    Ask any blockchain data question in plain English and get live data back — 15,500+ subgraphs, Token API,
+    Polymarket and Hyperliquid trader intelligence. Paid calls settle in USDC on Base over x402, or hand the 402
+    to your own wallet.
+  note: single published version; bin graph-advocate-mcp -> dist/index.js; deps @modelcontextprotocol/sdk, zod
+- name: langchain-graph-advocate
+  registry: pypi
+  url: https://pypi.org/project/langchain-graph-advocate/
+  metadata: https://pypi.org/pypi/langchain-graph-advocate/json
+  language: Python
+  kind: framework-integration (LangChain tool)
+  official: true
+  version: 0.1.2
+  published: '2026-05-04'
+  repository: https://github.com/PaulieB14/langchain-graph-advocate
+  description: LangChain tool wrapper for Graph Advocate — plain-English onchain data routing.
+- name: graph-aave-mcp
+  registry: npm
+  url: https://www.npmjs.com/package/graph-aave-mcp
+  metadata: https://registry.npmjs.org/graph-aave-mcp
+  language: TypeScript
+  kind: mcp-server (stdio)
+  official: true
+  version: 4.2.1
+  published: '2026-09-02'
+  license: MIT
+  install: npx graph-aave-mcp
+  repository: https://github.com/PaulieB14/graph-aave-mcp
+  description: Aave V2/V3/V4 — 40+ tools including cross-chain liquidation risk; needs GRAPH_API_KEY.
+- name: graph-uniswap-mcp
+  registry: npm
+  url: https://www.npmjs.com/package/graph-uniswap-mcp
+  metadata: https://registry.npmjs.org/graph-uniswap-mcp
+  language: TypeScript
+  kind: mcp-server (stdio)
+  official: true
+  version: 0.3.3
+  published: '2026-08-21'
+  license: MIT
+  install: npx -y graph-uniswap-mcp
+  repository: https://github.com/PaulieB14/graph-uniswap-mcp
+  description: Uniswap V2/V3/V4 — 8 tools over 13 subgraphs on 6 chains; needs GRAPH_API_KEY.
+- name: graph-polymarket-mcp
+  registry: npm
+  url: https://www.npmjs.com/package/graph-polymarket-mcp
+  metadata: https://registry.npmjs.org/graph-polymarket-mcp
+  language: JavaScript
+  kind: mcp-server (stdio)
+  official: true
+  version: 2.1.2
+  published: '2026-08-09'
+  license: MIT
+  install: npx graph-polymarket-mcp
+  repository: https://github.com/PaulieB14/graph-polymarket-mcp
+  description: Polymarket — 35 tools over Gamma/CLOB REST + subgraphs incl. CLOB V2 builder attribution.
+- name: graph-lending-mcp
+  registry: npm
+  url: https://www.npmjs.com/package/graph-lending-mcp
+  metadata: https://registry.npmjs.org/graph-lending-mcp
+  language: TypeScript
+  kind: mcp-server (stdio)
+  official: true
+  version: 1.0.1
+  published: '2026-03-06'
+  license: MIT
+  install: npx graph-lending-mcp
+  repository: https://github.com/PaulieB14/graph-lending-mcp
+  description: Cross-protocol lending via Messari standardized subgraphs.
+- name: graph-limitless-mcp
+  registry: npm
+  url: https://www.npmjs.com/package/graph-limitless-mcp
+  metadata: https://registry.npmjs.org/graph-limitless-mcp
+  language: TypeScript
+  kind: mcp-server (stdio)
+  official: true
+  version: 1.1.0
+  published: '2026-09-04'
+  license: MIT
+  install: npx graph-limitless-mcp
+  repository: https://github.com/PaulieB14/limitless-subgraphs
+  description: Limitless prediction markets on Base; needs GRAPH_API_KEY.
+  note: npm metadata carries no repository field; repository above is the author's limitless-subgraphs repo
+- name: predictfun-mcp
+  registry: npm
+  url: https://www.npmjs.com/package/predictfun-mcp
+  official: true
+  version: null
+  published: null
+  status: retired
+  note: >-
+    Unpublished from npm 2026-08-05 per https://docs.graphadvocate.com/mcp-packages ("their npx commands 404");
+    registry.npmjs.org/predictfun-mcp returned no dist-tags on 2026-09-19. Provider directs users to the
+    Predict.fun REST API instead.
+- name: substreams-search-mcp
+  registry: npm
+  url: https://www.npmjs.com/package/substreams-search-mcp
+  official: true
+  version: null
+  published: null
+  status: retired
+  repository: https://github.com/PaulieB14/substreams-search-mcp
+  note: Unpublished from npm 2026-08-11 per the provider's docs; registry returned no dist-tags on 2026-09-19.
+third_party:
+- name: mcp8004
+  registry: npm
+  url: https://www.npmjs.com/package/mcp8004
+  official: false
+  version: 0.1.0
+  published: '2026-04-02'
+  maintainer: jordanlyall
+  note: ERC-8004 auth middleware for MCP servers, listed in Graph Advocate's llms.txt routing services; not authored by PaulieB14.

@@ -1,0 +1,70 @@
+generated: '2026-09-19'
+method: searched
+source: https://graphadvocate.com/llms.txt (Pricing table) + https://docs.graphadvocate.com/route (Pricing) + https://graphadvocate.com/agents/capabilities.json (pricing + paid_endpoints[])
+checked: '2026-09-19'
+corroboration: >-
+  Machine-readable: capabilities.json paid_endpoints[] carries price_usdc and amount_base_units for all 22 paid
+  endpoints; the served OpenAPI carries x-payment-info.price per operation; the live anonymous 402 on /route quoted
+  amount "10000" base units of USDC (= $0.01). Human pages, the capability file, the contract and the live challenge
+  agree on every price checked.
+summary: >-
+  No subscription tiers. Graph Advocate is pay-per-call: a free routing allowance of 3 queries/day per
+  wallet-identified sender on the A2A endpoint, then $0.01 USDC per routed query, plus 21 further paid endpoints
+  priced $0.01–$0.10 USDC each with no free tier. Settlement is x402 on Base; there is no signup, card, invoice or
+  account. Pricing is published in prose, in a machine-readable capability file and inside the OpenAPI itself.
+plan_count: 2
+prices_published: true
+currency: USD (settled as USDC on Base, eip155:8453)
+billing_period: per-call
+public_signup_pricing: true
+discrepancy_note: >-
+  https://docs.graphadvocate.com/route states "Free: 10 queries / sender / day" while the agent card, llms.txt,
+  quickstart and capabilities.json all state 3/day. The machine-readable sources and the card are taken as
+  current; the route page appears stale.
+plans:
+- name: Free (identified sender)
+  price: 0
+  currency: USD
+  billing_period: day
+  included_quota: 3 routed queries/day per identified sender (0x EVM address in A2A message metadata.sender)
+  surface: POST / (A2A JSON-RPC message/send); POST /chat unlimited but returns routing only (never data)
+  overage: $0.01 USDC per routed query via x402 (HTTP 402 -> X-PAYMENT)
+  limits: identity must be a 42-char 0x address; a bare name does not qualify; anonymous callers pay from call 1
+- name: Pay-per-call (x402)
+  price: 0.01-0.10
+  currency: USD
+  billing_period: per-call
+  included_quota: null
+  overage: null
+  surface: POST /route and 21 further POST endpoints
+  limits: no free tier on paid endpoints regardless of metadata; maxTimeoutSeconds 300 on the payment authorization
+  per_endpoint_prices_usd:
+    /route: 0.01
+    /tip: any (voluntary)
+    /agent/score: 0.02
+    /ask: 0.05
+    /hyperliquid/fills: 0.02
+    /hyperliquid/pnl: 0.05
+    /hyperliquid/risk: 0.02
+    /hyperliquid/score: 0.02
+    /hyperliquid/screen: 0.05
+    /hyperliquid/vault: 0.10
+    /kalshi-polymarket/spread: 0.05
+    /kalshi/consensus-trend: 0.05
+    /kalshi/sports-live-edge: 0.05
+    /narrative/divergence: 0.05
+    /onchain-x402/address: 0.01
+    /polymarket/leaders: 0.02
+    /polymarket/pnl: 0.05
+    /polymarket/pnl-quick: 0.01
+    /polymarket/risk: 0.02
+    /polymarket/screen: 0.02
+    /predmarket/spread: 0.05
+    /uniswap/basis: 0.05
+    /uniswap/pretrade: 0.02
+    /uniswap/traders: 0.02
+free_surfaces:
+- GET /copytrade/data and GET /copytrade/vault/{addr} (Hyperliquid vault feed)
+- GET /.well-known/agent-card.json, /.well-known/x402, /agents/capabilities.json, /llms.txt, /openapi.json, /mcp (tools/list), /mcp/catalog, /health
+- Greetings, introductions and registry discovery probes over A2A ("always free")
+enterprise: none — no contact-sales tier, no volume pricing published

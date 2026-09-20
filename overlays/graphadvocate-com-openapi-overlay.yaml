@@ -1,0 +1,87 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist overlay for the Graph Advocate OpenAPI
+  version: 2026-09-19
+  x-generated: '2026-09-19'
+  x-method: generated
+  x-source: >-
+    Generated from openapi/graphadvocate-com-openapi.yml (verbatim copy of https://graphadvocate.com/openapi.json,
+    OpenAPI 3.1.0, 23 operations). The original is never mutated; this overlay records the enhancements API
+    Evangelist applies when rendering: tag grouping derived from path prefixes, a pointer to the sibling
+    discovery documents the spec already names in its own x-discovery block, and per-operation price notes
+    copied from the spec's own x-payment-info. Nothing here adds an operation, parameter or schema.
+extends: ./graphadvocate-com-openapi.yml
+actions:
+- target: $.info
+  description: Cross-link the provider-served discovery documents this pipeline harvested (all present in the spec's own x-discovery / x-llms-txt / x-agents-index extensions).
+  update:
+    x-apievangelist:
+      profile: https://github.com/api-evangelist/graphadvocate-com
+      agent_card: https://graphadvocate.com/.well-known/agent-card.json
+      mcp: https://graphadvocate.com/mcp
+      x402_discovery: https://graphadvocate.com/.well-known/x402
+      capabilities: https://graphadvocate.com/agents/capabilities.json
+      docs: https://docs.graphadvocate.com/
+- target: $
+  description: Declare tag groups (the source spec declares no tags[]; every operation is untagged).
+  update:
+    tags:
+    - {name: Routing, description: Plain-English onchain data routing to The Graph services}
+    - {name: Hyperliquid, description: Hyperliquid perps trader intelligence (x402 paid)}
+    - {name: Polymarket, description: Polymarket trader intelligence and leaderboard (x402 paid)}
+    - {name: Kalshi, description: Kalshi derived signals and Kalshi-Polymarket spread (x402 paid)}
+    - {name: Prediction Markets, description: Cross-venue Polymarket-Limitless spread (x402 paid)}
+    - {name: Uniswap, description: Uniswap pre-trade, basis and per-wallet flow (x402 paid)}
+    - {name: x402 Analytics, description: Natural-language SQL over x402 settlements and on-chain address lookup (x402 paid)}
+    - {name: Agent Reputation, description: ERC-8004 + settlement based 0-100 agent score (x402 paid)}
+    - {name: Narrative, description: Social momentum vs on-chain flow divergence (x402 paid)}
+- target: $.paths['/route'].post
+  update: {tags: [Routing]}
+- target: $.paths['/agent/score'].post
+  update: {tags: [Agent Reputation]}
+- target: $.paths['/ask'].post
+  update: {tags: [x402 Analytics]}
+- target: $.paths['/onchain-x402/address'].post
+  update: {tags: [x402 Analytics]}
+- target: $.paths['/hyperliquid/fills'].post
+  update: {tags: [Hyperliquid]}
+- target: $.paths['/hyperliquid/pnl'].post
+  update: {tags: [Hyperliquid]}
+- target: $.paths['/hyperliquid/risk'].post
+  update: {tags: [Hyperliquid]}
+- target: $.paths['/hyperliquid/score'].post
+  update: {tags: [Hyperliquid]}
+- target: $.paths['/hyperliquid/screen'].post
+  update: {tags: [Hyperliquid]}
+- target: $.paths['/hyperliquid/vault'].post
+  update: {tags: [Hyperliquid]}
+- target: $.paths['/kalshi-polymarket/spread'].post
+  update: {tags: [Kalshi]}
+- target: $.paths['/kalshi/consensus-trend'].post
+  update: {tags: [Kalshi]}
+- target: $.paths['/kalshi/sports-live-edge'].post
+  update: {tags: [Kalshi]}
+- target: $.paths['/polymarket/pnl'].post
+  update: {tags: [Polymarket]}
+- target: $.paths['/polymarket/pnl-quick'].post
+  update: {tags: [Polymarket]}
+- target: $.paths['/polymarket/risk'].post
+  update: {tags: [Polymarket]}
+- target: $.paths['/polymarket/screen'].post
+  update: {tags: [Polymarket]}
+- target: $.paths['/polymarket/leaders'].post
+  update: {tags: [Polymarket]}
+- target: $.paths['/predmarket/spread'].post
+  update: {tags: [Prediction Markets]}
+- target: $.paths['/narrative/divergence'].post
+  update: {tags: [Narrative]}
+- target: $.paths['/uniswap/basis'].post
+  update: {tags: [Uniswap]}
+- target: $.paths['/uniswap/pretrade'].post
+  update: {tags: [Uniswap]}
+- target: $.paths['/uniswap/traders'].post
+  update: {tags: [Uniswap]}
+- target: $.paths.*.post.responses['402']
+  description: Every operation's 402 is the x402 v2 payment challenge; name it so renderers do not show it as an unexplained error.
+  update:
+    description: Payment required — x402 v2 PaymentRequired (accepts[] with USDC-on-Base PaymentRequirements; retry with X-PAYMENT). See errors/graphadvocate-com-problem-types.yml.

@@ -1,0 +1,35 @@
+generated: '2026-09-19'
+method: searched
+source: https://graphadvocate.com/llms.txt (Pricing) + https://graphadvocate.com/agents/capabilities.json (pricing.free_tier*) + https://docs.graphadvocate.com/quickstart + agent card capabilities.extensions[0].params.freeTierPerDay
+corroboration: >-
+  Live anonymous POST https://graphadvocate.com/route on 2026-09-19 returned HTTP 402 (application/json) with a
+  `payment-required` header and NO RateLimit-*, X-RateLimit-* or Retry-After headers — consistent with the
+  documented model, where quota exhaustion surfaces as a payment challenge rather than a 429.
+confidence: high
+limit_count: 1
+scopes:
+- scope: per-identified-sender (0x EVM wallet address in A2A message metadata)
+  surface: POST / (A2A JSON-RPC message/send) — the free routing tier
+  window: 1 day
+  limit: 3
+  unit: routed queries
+  burst: null
+  status_on_exhaustion: 402
+  exhaustion_behaviour: >-
+    Further calls return HTTP 402 with x402 PaymentRequirements ($0.01 USDC on Base); any x402-aware client pays
+    and continues with no rate cap documented beyond payment.
+  counted: routed queries only — greetings, introductions and registry discovery probes are always free
+  identity_rule: a bare `name` does not qualify (rotating names minted unlimited buckets); anonymous callers have no free tier and pay from call 1
+  headers: []
+  docs: https://docs.graphadvocate.com/quickstart
+  discrepancy: https://docs.graphadvocate.com/route says 10/day; card, llms.txt, quickstart and capabilities.json say 3/day — 3 is recorded as current.
+paid_surfaces:
+  rate_limit: undocumented
+  note: >-
+    No request-rate ceiling is published for paid endpoints (/route with payment, /hyperliquid/*, /polymarket/*,
+    etc.); the only stated bounds are per-call price, result-size caps (n ≤ 10 on screen endpoints) and the
+    payment authorization's maxTimeoutSeconds 300. No 429 is declared in the OpenAPI.
+response_headers:
+  documented: []
+  observed: []
+  note: No rate-limit signaling headers exist on this API; the runtime signal an agent must watch for is HTTP 402 + `payment-required`.

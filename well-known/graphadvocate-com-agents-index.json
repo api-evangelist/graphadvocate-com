@@ -1,0 +1,1 @@
+{"agent":"graph-advocate","version":"1.0","files":{"capabilities":"https://graphadvocate.com/agents/capabilities.json","agent_card":"https://graphadvocate.com/.well-known/agent-card.json","llms_txt":"https://graphadvocate.com/llms.txt","openapi":"https://graphadvocate.com/openapi.json"},"start_here":"https://graphadvocate.com/llms.txt"}

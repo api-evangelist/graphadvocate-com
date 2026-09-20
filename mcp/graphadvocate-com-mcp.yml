@@ -1,0 +1,104 @@
+generated: '2026-09-19'
+method: probed
+status: published
+source: https://graphadvocate.com/mcp (GET service descriptor + POST initialize + POST tools/list, all HTTP 200 anonymous, 2026-09-19)
+docs: https://docs.graphadvocate.com/quickstart
+deployment:
+  mode: both
+  endpoint: https://graphadvocate.com/mcp
+  install: npx -y graph-advocate-mcp
+  package: https://www.npmjs.com/package/graph-advocate-mcp
+  auth: none
+  verified: probed
+  notes: >-
+    REMOTE: POST https://graphadvocate.com/mcp with Accept: application/json, text/event-stream answered
+    `initialize` (protocolVersion 2024-11-05, serverInfo graph-advocate-mcp 1.0.0, capabilities tools/prompts/
+    resources with listChanged false) and `tools/list` (3 tools with inputSchema) with no credentials — the live
+    schema is NOT gated. The GET descriptor advertises "connect via SSE at /mcp/sse for full session", but
+    GET /mcp/sse returned 404 on 2026-09-19 both with and without Accept: text/event-stream; the one-shot
+    Streamable-HTTP-style POST is the surface that works today. Claude Desktop config published in the quickstart
+    uses {"url": "https://graphadvocate.com/mcp"}.
+    LOCAL: graph-advocate-mcp 2.11.1 on npm (maintainer paulieb, MIT, bin graph-advocate-mcp -> dist/index.js,
+    deps @modelcontextprotocol/sdk + zod, published 2026-08-13, repository github.com/PaulieB14/graph-advocate,
+    source dir mcp/ in that repo). Install string is the npm bin name; the provider's docs show `npx` for its
+    sibling packages and the package declares a bin, so `npx -y graph-advocate-mcp` is the standard invocation.
+    Paid calls made through either surface settle by x402 (USDC on Base) — payment, not authentication.
+server:
+  name: graph-advocate-mcp
+  version: 1.0.0
+  transport: http
+  url: https://graphadvocate.com/mcp
+  sse_url: https://graphadvocate.com/mcp/sse
+  sse_url_status: 404 (advertised by the GET descriptor, not served on 2026-09-19)
+  protocol_version: '2024-11-05'
+  capabilities:
+    tools: {listChanged: false}
+    prompts: {listChanged: false}
+    resources: {listChanged: false}
+  descriptor:
+    name: Graph Advocate MCP
+    status: healthy
+    transport: sse
+    description: >-
+      Onchain data routing for The Graph Protocol. POST /mcp for one-shot JSON-RPC (initialize, tools/list);
+      connect via SSE at /mcp/sse for full session.
+  catalog_url: https://graphadvocate.com/mcp/catalog
+  catalog_file: graphadvocate-com-mcp-catalog.json
+auth:
+  methods: [none]
+  payment: x402 v2 — USDC on Base (eip155:8453); see conventions/ and plans/
+  identity: optional wallet address in message metadata (free tier accounting), not an auth credential
+tool_count: 3
+tools_file: graphadvocate-com-mcp-tools.json   # verbatim tools/list result with inputSchema
+tools:
+- name: route_data_request
+  category: routing
+  description: >-
+    Route an onchain data request to the right Graph Protocol service. Returns the exact tool + args to use. Call
+    this FIRST for any blockchain data need.
+  input_schema_summary: '{request: string (required), session_id: string (optional, multi-turn context)}'
+  source_operation: openapi/graphadvocate-com-openapi.yml#routeQuery
+- name: recommend_npm_package
+  category: routing
+  description: >-
+    Recommend the right @paulieb npm MCP package for a specific protocol. Returns package name, install command, and
+    what it covers.
+  input_schema_summary: '{protocol: string (required), e.g. aave | polymarket | substreams}'
+  source_operation: null   # no REST operation; backed by the /mcp/catalog list
+- name: compare_graph_services
+  category: routing
+  description: >-
+    Compare all Graph Protocol services for a specific use case. Returns a ranked list with confidence scores.
+  input_schema_summary: '{use_case: string (required)}'
+  source_operation: null   # composite over the routing model; no REST operation
+downstream_mcp_servers:
+  note: >-
+    The router hands off to six protocol-specific stdio MCP servers by the same author (GET /mcp/catalog, saved
+    verbatim). They read The Graph directly with the caller's own GRAPH_API_KEY and are catalogued in
+    packages/graphadvocate-com-packages.yml; they are not this hosted server.
+  names: [graph-aave-mcp, graph-uniswap-mcp, graph-polymarket-mcp, graph-lending-mcp, graph-limitless-mcp]
+crosswalk: graphadvocate-com-tool-crosswalk.yml
+x-evidence:
+- url: https://graphadvocate.com/mcp
+  method: GET
+  http_status: 200
+  content_type: application/json
+- url: https://graphadvocate.com/mcp
+  method: POST initialize
+  http_status: 200
+  content_type: application/json
+- url: https://graphadvocate.com/mcp
+  method: POST tools/list
+  http_status: 200
+  content_type: application/json
+  tools_returned: 3
+- url: https://graphadvocate.com/mcp/sse
+  method: GET
+  http_status: 404
+- url: https://graphadvocate.com/mcp/catalog
+  method: GET
+  http_status: 200
+- url: https://registry.npmjs.org/graph-advocate-mcp
+  http_status: 200
+  latest: 2.11.1
+  published: '2026-08-13'

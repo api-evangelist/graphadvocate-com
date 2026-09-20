@@ -1,0 +1,70 @@
+generated: '2026-09-19'
+method: searched
+source: >-
+  https://graphadvocate.com/.well-known/agent.json (in-band _deprecation block), https://docs.graphadvocate.com/mcp-packages
+  (retired-packages notice with dates), https://graphadvocate.com/openapi.json (info.version), agent card (version
+  1.1.0), npm registry metadata, https://graphadvocate.com/dashboard, https://graphadvocate.com/health.
+versioning:
+  scheme: unversioned-path
+  api_version: 1.0.0 (openapi.json info.version)
+  agent_card_version: 1.1.0
+  mcp_server_version: 1.0.0 (initialize serverInfo); npm stdio package 2.11.1
+  notes: >-
+    No version segment in any path (/route, /hyperliquid/score, /mcp). No versioning policy page. Version numbers
+    appear on the card, the spec and the npm package and disagree with each other, which is normal for a
+    single-operator agent but means no one identifier tells a consumer what changed.
+changelog:
+  url: null
+  artifact: null
+  notes: >-
+    No dated changelog page found on either host or in the repo root (no CHANGELOG.md in
+    github.com/PaulieB14/graph-advocate). The only dated change records are the retirement notices in the docs
+    (below) and npm publish dates in packages/. No ChangeLog pointer emitted.
+status_page:
+  url: null
+  operational_dashboard: https://graphadvocate.com/dashboard
+  health_endpoint: https://graphadvocate.com/health
+  machine_readable_api: true
+  notes: >-
+    No status page (/status 404). The provider serves a live monitoring dashboard ("Graph Advocate — Live
+    Dashboard": 24-hour request volume, live activity feed, service health per downstream service, paying
+    customers) and a JSON /health endpoint ({"status":"ok","service":"graph-advocate",...}). The dashboard is an
+    operations view, not an incident/status page, so NO StatusPage pointer is emitted; it is wired as type Dashboard.
+deprecation:
+  policy_documented: false
+  rfc8594_headers: false
+  deprecated_operations: []
+  deprecated_surfaces:
+  - surface: /.well-known/agent.json (legacy A2A discovery path)
+    status: deprecated, still served
+    successor: https://graphadvocate.com/.well-known/agent-card.json
+    signal: >-
+      In-band `_deprecation` object in the served JSON: {message: "This discovery path is deprecated. Use
+      /.well-known/agent-card.json.", successor: ...}. No Deprecation or Sunset response header; no sunset date.
+    evidence: {url: https://graphadvocate.com/.well-known/agent.json, http_status: 200, fetched: '2026-09-19'}
+  - surface: predictfun-mcp (npm)
+    status: retired 2026-08-05 (unpublished)
+    successor: Predict.fun REST API (https://dev.predict.fun/)
+    evidence: {url: https://docs.graphadvocate.com/mcp-packages, http_status: 200, fetched: '2026-09-19'}
+  - surface: substreams-search-mcp (npm)
+    status: retired 2026-08-11 (unpublished)
+    successor: GET substreams.dev/v1/registry/packages?query=<term>
+    evidence: {url: https://docs.graphadvocate.com/mcp-packages, http_status: 200, fetched: '2026-09-19'}
+  - surface: create-substreams-sink-sql (npm)
+    status: retired 2026-08-17 (unpublished)
+    successor: substreams sink postgres|clickhouse (Substreams CLI)
+    evidence: {url: https://docs.graphadvocate.com/mcp-packages, http_status: 200, fetched: '2026-09-19'}
+  notes: >-
+    No written deprecation POLICY, but the provider does practise announced deprecation with dates and named
+    successors — the retired packages carry retirement dates and replacement surfaces, and the legacy discovery
+    path tells the caller where to go. The Deprecation pointer is emitted on that practice; policy_documented
+    stays false.
+sla:
+  published: false
+  notes: No SLA, uptime commitment or support hours published. Free-tier quota and per-call prices are the only stated terms (see plans/ and rate-limits/).
+observed_change_cadence:
+  window: '2026-03-06 to 2026-09-16'
+  signals:
+  - npm releases across the MCP family: 2026-03-06, 2026-05-04, 2026-08-09, 2026-08-13, 2026-08-21, 2026-09-02, 2026-09-04
+  - github.com/PaulieB14/graph-advocate last push 2026-09-16
+  - /mcp/catalog carries updated 2026-09-20T03:11Z (generated per request)

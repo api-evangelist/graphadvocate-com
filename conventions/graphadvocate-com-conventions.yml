@@ -1,0 +1,115 @@
+generated: '2026-09-19'
+method: searched
+source: >-
+  https://docs.graphadvocate.com/quickstart, /route, /x402, https://graphadvocate.com/llms.txt,
+  https://graphadvocate.com/agents/capabilities.json, the served OpenAPI (openapi/graphadvocate-com-openapi.yml) and
+  one live anonymous POST /route (402) on 2026-09-19.
+description: >-
+  How Graph Advocate behaves across every operation: three access paths (A2A JSON-RPC at POST /, REST at /route +
+  22 paid endpoints, MCP at /mcp), payment-not-auth via x402, a per-wallet free quota, a single JSON response
+  envelope, no idempotency mechanism, no pagination, no versioning header, and no reversal path because nothing is
+  mutated.
+
+base_url: https://graphadvocate.com
+api_style: JSON-over-HTTPS. Every REST operation is POST with a JSON body; A2A is JSON-RPC 2.0 message/send at POST /; MCP is JSON-RPC 2.0 at POST /mcp.
+
+authentication:
+  scheme: none — payment-gated (x402) with optional self-asserted wallet identity for the free tier
+  docs: https://docs.graphadvocate.com/quickstart
+  detail: authentication/graphadvocate-com-authentication.yml
+
+payment:
+  protocol: x402 v2
+  challenge: HTTP 402 + `payment-required` header (base64) + JSON body with accepts[] and output_example
+  retry_header: X-PAYMENT
+  network: 'eip155:8453 (Base)'
+  asset: USDC
+  facilitator: CDP (api.cdp.coinbase.com/platform/v2/x402)
+  price_in_contract: every OpenAPI operation carries x-payment-info.price {mode fixed, currency USD, amount}
+  a2a_carriage: prefix message text with `x402:<signed-payment>`
+  rule_from_provider: Always pay the payTo in the LIVE 402 challenge, never an address copied from a static file.
+  docs: https://docs.graphadvocate.com/x402
+
+idempotency:
+  supported: false
+  coverage: none
+  mechanism: null
+  applies_to: null
+  notes: >-
+    No Idempotency-Key or equivalent is documented on any surface. Each paid POST is a fresh $0.01–$0.10 settlement:
+    retrying a request that already settled pays again. The only replay protection is the x402 payment itself
+    (an EIP-3009 authorization has a nonce and maxTimeoutSeconds 300, so the SAME signed payment cannot be
+    settled twice) — that protects the wallet from double-settlement of one signature, not the caller from
+    re-issuing a query. Agents should treat every paid call as billable once per attempt.
+
+reversibility:
+  write_surface: none
+  status: na
+  notes: >-
+    All 23 operations are read-style queries (route, score, screen, spread, pnl, risk, ask) — nothing is created,
+    updated or deleted on the provider, so there is no data mutation to reverse. The one irreversible act is the
+    x402 settlement: an on-chain USDC transfer with no documented refund, void or dispute path (no refund
+    operation in the spec, none in the docs). POST /tip is a voluntary payment with the same property. Recorded as
+    na for data and "irreversible, no refund path documented" for money; no window is asserted because none is
+    stated.
+  reversal_operations: []
+  payment_reversal:
+    documented: false
+    note: No refund/void endpoint or policy located on either host or in the repo docs as of 2026-09-19.
+
+dry_run:
+  supported: partial
+  mechanism: >-
+    POST /chat (free, no identity) and POST / over A2A (free 3/day identified) return the ROUTING RESULT — the
+    subgraph, the GraphQL and a curl example — without executing against metered infrastructure; the docs frame
+    this as "the query, not the answer". It rehearses the routing decision, not the paid endpoint's output. The
+    402 body also carries an `output_example` so a client can see the response shape before paying.
+  docs: https://docs.graphadvocate.com/quickstart
+
+pagination:
+  style: none
+  notes: Responses are bounded documents; screen-type endpoints cap N (≤10 traders/holders) via an `n`/`limit` body field rather than paging.
+
+field_expansion:
+  supported: false
+
+metadata:
+  supported: true (request side only)
+  mechanism: A2A params.metadata.sender / params.metadata.name / params.message.metadata.from_agent_id
+  purpose: identifies the calling agent for free-tier accounting; a 0x EVM address is required to qualify
+  docs: https://graphadvocate.com/agents/capabilities.json (pricing.free_tier_how)
+
+request_tracing:
+  request_id_header: x-railway-request-id
+  notes: Observed on the live 402 (server railway-hikari, x-railway-edge jfk1, x-hikari-trace). Platform-emitted by Railway, not documented by the provider; useful for support correlation only.
+
+versioning:
+  scheme: unversioned-path
+  mechanism: none — no version header, no path segment
+  current: openapi info.version 1.0.0; agent card 1.1.0; MCP protocolVersion 2024-11-05
+  detail: lifecycle/graphadvocate-com-lifecycle.yml
+
+response_envelope:
+  media_type: application/json
+  routing_shape: '{ recommendation, reason, confidence: high|medium|low, query_ready: {tool, args}, curl_example, install?, subgraph_details?, alternatives[], execution_result? }'
+  notes: >-
+    `query_ready.args.gql` is live-tested GraphQL for the named subgraph_id; `execution_result` is present only
+    on paid calls that could run the query. Trader-intelligence endpoints return their own flat JSON documents
+    (skill_score, classification, etc. — see the /hyperliquid and /polymarket catalogs saved in well-known/).
+
+error_envelope:
+  media_type: application/json
+  shape: x402 PaymentRequired on 402; plain-text on 404/405; JSON-RPC error object on / and /mcp
+  rfc9457: false
+  detail: errors/graphadvocate-com-problem-types.yml
+
+rate_limit_signaling:
+  headers: none documented or observed (no RateLimit-*, X-RateLimit-*, Retry-After)
+  exhaustion_status: 402 (free quota exhausted -> payment required), not 429
+  detail: rate-limits/graphadvocate-com-rate-limits.yml
+
+surfaces:
+  a2a: https://graphadvocate.com/ (POST, JSON-RPC 2.0 message/send)
+  rest: https://graphadvocate.com/route + 22 paid POST endpoints
+  mcp: https://graphadvocate.com/mcp
+  web: https://graphadvocate.com/chat

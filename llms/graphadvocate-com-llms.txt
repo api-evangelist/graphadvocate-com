@@ -1,0 +1,112 @@
+# Graph Advocate
+
+Routing agent for The Graph Protocol. Send a plain-English data question
+about any blockchain (Ethereum, Base, Arbitrum, Polygon, Solana, TON, BNB,
+Polymarket, Aave, Uniswap, ENS, ERC-8004 agents, etc.) and receive back
+the best service to use plus a ready-to-run curl / GraphQL / MCP example.
+
+Production: https://graphadvocate.com
+Repository: https://github.com/PaulieB14/graph-advocate
+
+## Endpoints
+
+- POST /                           A2A JSON-RPC 2.0 (main agent endpoint)
+- GET  /.well-known/agent-card.json  A2A agent card
+- GET  /agents/capabilities.json   Machine-readable per-service capability list
+- GET  /chat                       Web chat UI
+- POST /chat                       Free, no identity or wallet. Returns the query to run and
+                                   how to get your own Token API JWT - never the data itself.
+- GET  /dashboard                  Live monitoring dashboard
+- POST /feedback                   Agent feedback submission
+- GET  /quality                    Response quality metrics (operator only — 401 without ADMIN_TOKEN)
+- GET  /export/stats               Summary stats (operator only — 401 without ADMIN_TOKEN)
+- GET  /copytrade/data             Hyperliquid vault leaderboard JSON (free)
+- GET  /copytrade/vault/{addr}     Per-vault deep dive: HL live (APR, TVL, sparkline,
+                                   positions, last 10 trades, top followers) +
+                                   Pinax lifetime flows + HyperEVM leader context (free)
+
+## Pricing
+
+Free tier: set `metadata.sender` to a 0x EVM address (42 chars) in the A2A
+message to be counted as an identified sender and claim 3 free /route
+queries/day — send it on the FIRST call to skip the 402 round-trip. A `name`
+alone does NOT qualify: the allowance is counted per wallet. Anonymous
+requests (no sender metadata) are not eligible and pay $0.01 USDC from call 1.
+
+| Endpoint                       | Price        | Notes |
+|--------------------------------|--------------|-------|
+| POST /                         | free 3/day   | Then $0.01 USDC via x402 |
+| POST /route                    | free 3/day   | Then $0.01 USDC via x402 |
+| GET  /chat                     | free         | Routing-only; doesn't answer with data |
+| POST /tip                      | optional tip | Any amount |
+| POST /agent/score               | $0.02        | 0-100 reputation: ERC-8004 + USDC settlement + on-chain feedback |
+| POST /ask                       | $0.05        | NL Q&A over 132M+ x402 settlements on Base |
+| POST /hyperliquid/fills         | $0.02        | Recent perp fill stream + flow summary |
+| POST /hyperliquid/pnl           | $0.05        | Per-coin PnL breakdown |
+| POST /hyperliquid/risk          | $0.02        | Liquidation + funding burn risk |
+| POST /hyperliquid/score         | $0.02        | Skill score for an HL trader |
+| POST /hyperliquid/screen        | $0.05        | Top N (≤10) HL traders by coin |
+| POST /hyperliquid/vault         | $0.10        | Vault evaluator (leader + concentration) |
+| POST /kalshi-polymarket/spread  | $0.05        | Cross-source spread Kalshi↔Polymarket (JOIN) |
+| POST /kalshi/consensus-trend    | $0.05        | Kalshi consensus slope+acceleration (forecast_history) |
+| POST /kalshi/sports-live-edge   | $0.05        | Live sports mispricing (play-by-play vs candles) |
+| POST /narrative/divergence      | $0.05        | Social momentum vs on-chain flow divergence (Cambrian↔Graph JOIN) |
+| POST /onchain-x402/address      | $0.01        | On-chain x402 activity for an address (Base) |
+| POST /polymarket/leaders        | $0.02        | PM leaderboard with derived skill metrics |
+| POST /polymarket/pnl            | $0.05        | Full PM PnL: scores + per-position mark-to-market |
+| POST /polymarket/pnl-quick      | $0.01        | Skill score for a PM wallet |
+| POST /polymarket/risk           | $0.02        | Wallet-type + ghost-fill risk |
+| POST /polymarket/screen         | $0.02        | Top wagerers on a PM market (≤10) |
+| POST /predmarket/spread         | $0.05        | Cross-venue Polymarket↔Limitless spread (JOIN) |
+| POST /uniswap/basis             | $0.05        | Uniswap spot vs Hyperliquid perp basis (cross-venue JOIN) |
+| POST /uniswap/pretrade          | $0.02        | Uniswap pre-trade check: liquidity, deepest venue, honeypot flow |
+| POST /uniswap/traders           | $0.02        | Uniswap per-wallet flow: accumulators vs distributors |
+
+All paid endpoints settle in USDC on Base via x402. Paid endpoints have no
+free tier — payment is required from call 1 regardless of sender metadata.
+
+## Routing services
+
+- token-api            — REST: balances, holders, swaps, NFTs (EVM/Solana/TON)
+- subgraph-registry    — GraphQL: 15,500+ subgraphs, custom queries
+- substreams           — gRPC: raw block/event/trace streaming
+- graph-aave-mcp       — MCP: Aave V2/V3/V4, 40 tools
+- graph-uniswap-mcp    — MCP: Uniswap V2/V3/V4, 8 tools over 13 subgraphs (6 chains)
+- graph-polymarket-mcp — MCP: Polymarket, 35 tools (incl. CLOB V2 builder attribution)
+- graph-lending-mcp    — MCP: cross-protocol lending (Messari)
+- graph-limitless-mcp  — MCP: Limitless prediction markets on Base
+- predictfun-mcp       — MCP: Predict.fun on BNB Chain
+- polymarket-token-api — REST: Polymarket markets, OHLCV, P&L, positions
+- hyperliquid-token-api— REST: Hyperliquid markets, users, vaults
+- cambrian-social      — REST: social momentum + sentiment, JOINed with on-chain flow
+- copytrade            — REST: free Hyperliquid vault feed (lifetime flows + native APR/names)
+- 8004scan             — REST: ERC-8004 agent discovery
+- mcp8004              — Library: ERC-8004 auth middleware for MCP servers
+
+Full per-service definitions: /agents/capabilities.json
+
+## Example
+
+```bash
+curl -X POST https://graphadvocate.com \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "message/send",
+    "params": {
+      "message": {
+        "role": "user",
+        "parts": [{"kind": "text", "text": "Top USDC holders on Ethereum"}]
+      }
+    },
+    "id": 1
+  }'
+```
+
+## Identity
+
+- ERC-8004 agent #734 on Arbitrum, #41034 on Base
+- ENS: graphadvocate.eth
+- Identity wallet (ERC-8004 / ENS): 0x575267eEd09c338FAE5716A486A7B58A5749A292
+- Payments are made to the `payTo` in the 402 challenge, NOT to the identity
+  wallet above. Never pay an address read from this file.

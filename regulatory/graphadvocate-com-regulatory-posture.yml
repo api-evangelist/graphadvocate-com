@@ -1,0 +1,45 @@
+generated: '2026-09-19'
+method: searched
+probe: true
+source: >-
+  Live probes 2026-09-19 of conventional paths on graphadvocate.com and docs.graphadvocate.com, the artifacts
+  harvested this run (well-known/, security/, lifecycle/, conformance/), and the docs site index
+  (https://docs.graphadvocate.com/llms.txt, 20 pages).
+signals: {}
+absent:
+  note: >-
+    Graph Advocate publishes NO horizontal-regulatory surface: no privacy policy, no terms of service, no
+    accessibility statement, no subprocessor list, no DPA, no data-residency page, no transparency report, no
+    SBOM, no support-lifetime statement, no age-assurance or notice-and-action page. The docs cover the API,
+    payments and agent protocols only. This is a single-operator agent selling per-call onchain data to other
+    agents; absence is the measurement, not an inference about which regimes apply.
+  probed:
+  - {url: https://graphadvocate.com/privacy, status: 404}
+  - {url: https://graphadvocate.com/terms, status: 404}
+  - {url: https://graphadvocate.com/accessibility, status: 404}
+  - {url: https://graphadvocate.com/legal/subprocessors, status: 404}
+  - {url: https://graphadvocate.com/legal/dpa, status: 404}
+  - {url: https://graphadvocate.com/security, status: 404}
+  - {url: https://graphadvocate.com/transparency, status: 404}
+  - {url: https://graphadvocate.com/.well-known/security.txt, status: 404}
+  - {url: https://docs.graphadvocate.com/privacy, status: 404}
+  - {url: https://docs.graphadvocate.com/terms, status: 404}
+observations_not_signals:
+  note: >-
+    Two published statements touch adjacent ground but do not meet the substance bar for any signal above and are
+    recorded here only so a later pass does not re-litigate them.
+  items:
+  - topic: AI disclosure
+    sources:
+    - https://graphadvocate.com/ (meta description names a "Claude-powered routing agent")
+    - openapi.json info.description
+    - https://docs.graphadvocate.com/ask ("DuckDB + Anthropic Sonnet runs the SQL")
+    why_not_a_signal: >-
+      Product marketing naming the model in use; not an AI transparency statement about users' interaction,
+      data use or limitations.
+  - topic: Key-handling / security posture
+    sources:
+    - https://docs.graphadvocate.com/x402 (Wallets section — earnings wallet isolated from identity key; "signs in-memory, never logged")
+    why_not_a_signal: >-
+      An architectural note in developer docs, not a vulnerability disclosure policy, trust center or
+      incident-notification commitment.

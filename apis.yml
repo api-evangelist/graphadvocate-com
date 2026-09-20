@@ -1,18 +1,106 @@
 aid: graphadvocate-com
 name: PaulieB14
-description: 'PaulieB14 is a company surfaced via the API Evangelist harvest backlog (source: a2a-registry)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  PaulieB14 (GitHub handle of the Graph Advocate author; provider.organization in the published A2A agent card)
+  operates Graph Advocate, an onchain-data routing agent for The Graph Protocol at graphadvocate.com. Agents send a
+  plain-English blockchain data question over A2A JSON-RPC 2.0, REST or MCP and receive the best subgraph among
+  15,500+ indexed on The Graph, a ready-to-run GraphQL query and, on paid calls, the executed rows. Twenty-two paid
+  endpoints add derived trader intelligence for Hyperliquid perps, Polymarket, Kalshi, Limitless and Uniswap plus
+  natural-language SQL over x402 settlements on Base. There are no API keys or signups: paid calls settle in USDC on
+  Base via x402 (HTTP 402 + PAYMENT-REQUIRED header), and the agent is registered as ERC-8004 agent #734 (Arbitrum)
+  and #41034 (Base) under the ENS name graphadvocate.eth. The author also publishes six npx-installable MCP servers
+  (Aave, Uniswap, Polymarket, lending, Limitless) that read The Graph directly.
+image: https://graphadvocate.com/graphadvocate.png
 url: https://raw.githubusercontent.com/api-evangelist/graphadvocate-com/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:a2a-registry
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-09-19 (local-v3) — real OpenAPI, A2A card, hosted MCP and x402 discovery harvested
 specificationVersion: '0.20'
 created: '2026-09-19'
 modified: '2026-09-19'
 tags:
-- Company
-apis: []
+- Blockchain
+- Onchain Data
+- The Graph
+- Subgraphs
+- GraphQL
+- MCP
+- A2A
+- x402
+- Agentic Commerce
+- AI Agents
+- DeFi
+- Prediction Markets
+- Trader Intelligence
+- Web3
+apis:
+- name: Graph Advocate API
+  description: >-
+    Routing and trader-intelligence API at graphadvocate.com. POST / speaks A2A JSON-RPC 2.0 (message/send) and is the
+    free tier (3 routed queries/day per wallet-identified sender); POST /route and 22 further POST endpoints
+    (/hyperliquid/*, /polymarket/*, /kalshi/*, /uniswap/*, /predmarket/spread, /narrative/divergence, /ask,
+    /onchain-x402/address, /agent/score) are x402-gated at $0.01-$0.10 USDC on Base and answer 402 with x402 v2
+    PaymentRequirements until an X-PAYMENT header is presented. All 23 operations in the published OpenAPI 3.1.0 are
+    read-style queries; there is no API key, OAuth or signup.
+  image: https://graphadvocate.com/graphadvocate.png
+  humanURL: https://docs.graphadvocate.com/
+  baseURL: https://graphadvocate.com
+  tags:
+  - Blockchain
+  - Onchain Data
+  - The Graph
+  - GraphQL
+  - x402
+  - A2A
+  - Prediction Markets
+  - Trader Intelligence
+  properties:
+  - type: OpenAPI
+    url: openapi/graphadvocate-com-openapi.yml
+  - type: OpenAPI
+    name: provider-hosted OpenAPI 3.1.0 (source of the local copy)
+    url: https://graphadvocate.com/openapi.json
+  - type: Documentation
+    url: https://docs.graphadvocate.com/
+  - type: APIReference
+    url: https://docs.graphadvocate.com/route
+  - type: GettingStarted
+    url: https://docs.graphadvocate.com/quickstart
+  - type: Overlay
+    url: overlays/graphadvocate-com-openapi-overlay.yaml
+  - type: ErrorCatalog
+    url: errors/graphadvocate-com-problem-types.yml
+  - type: Authentication
+    url: authentication/graphadvocate-com-authentication.yml
+  - type: Conventions
+    url: conventions/graphadvocate-com-conventions.yml
+  - type: RateLimits
+    url: rate-limits/graphadvocate-com-rate-limits.yml
+  - type: Plans
+    url: plans/graphadvocate-com-plans-pricing.yml
+- name: Graph Advocate MCP Server
+  description: >-
+    Hosted MCP server at https://graphadvocate.com/mcp (Streamable HTTP for one-shot JSON-RPC initialize and
+    tools/list; SSE session at /mcp/sse). tools/list answers anonymously with three tools — route_data_request,
+    recommend_npm_package and compare_graph_services — each carrying a real inputSchema. A stdio companion,
+    graph-advocate-mcp 2.11.1 on npm, wraps the same routing surface for Claude Desktop, Cursor and other local MCP
+    clients. GET /mcp/catalog lists the six protocol-specific MCP servers the router hands off to.
+  image: https://graphadvocate.com/graphadvocate.png
+  humanURL: https://docs.graphadvocate.com/quickstart
+  baseURL: https://graphadvocate.com/mcp
+  tags:
+  - MCP
+  - AI Agents
+  - The Graph
+  - Onchain Data
+  properties:
+  - type: MCPServer
+    url: mcp/graphadvocate-com-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/graphadvocate-com-tool-crosswalk.yml
+  - type: Documentation
+    url: https://docs.graphadvocate.com/mcp-packages
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -21,3 +109,64 @@ maintainers:
 common:
 - type: Website
   url: https://graphadvocate.com/
+- type: Documentation
+  url: https://docs.graphadvocate.com/
+- type: DeveloperPortal
+  url: https://docs.graphadvocate.com/
+- type: GettingStarted
+  url: https://docs.graphadvocate.com/quickstart
+- type: APIReference
+  url: https://graphadvocate.com/openapi.json
+- type: Pricing
+  url: https://docs.graphadvocate.com/route
+- type: GitHubOrganization
+  url: https://github.com/PaulieB14
+- type: SourceCode
+  url: https://github.com/PaulieB14/graph-advocate
+- type: Twitter
+  url: https://x.com/graphtronauts_c
+- type: LLMsTxt
+  url: llms/graphadvocate-com-llms.txt
+- type: AgentCard
+  url: a2a/graphadvocate-com-a2a.yml
+- type: MCPServer
+  url: mcp/graphadvocate-com-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/graphadvocate-com-tool-crosswalk.yml
+- type: WellKnown
+  url: well-known/graphadvocate-com-well-known.yml
+- type: Packages
+  url: packages/graphadvocate-com-packages.yml
+- type: SDKs
+  url: packages/graphadvocate-com-packages.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Conformance
+  url: conformance/graphadvocate-com-conformance.yml
+- type: ErrorCatalog
+  url: errors/graphadvocate-com-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/graphadvocate-com-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/graphadvocate-com-lifecycle.yml
+- type: Authentication
+  url: authentication/graphadvocate-com-authentication.yml
+- type: Conventions
+  url: conventions/graphadvocate-com-conventions.yml
+- type: Plans
+  url: plans/graphadvocate-com-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/graphadvocate-com-rate-limits.yml
+- type: Overlay
+  url: overlays/graphadvocate-com-openapi-overlay.yaml
+- type: RegulatoryPosture
+  url: regulatory/graphadvocate-com-regulatory-posture.yml
+- type: DomainSecurity
+  url: security/graphadvocate-com-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/graphadvocate-com-agentic-access.yml
+x-enrichment:
+  date: '2026-09-19'
+  status: enriched
+  artifacts_added: 32
+  pass: local-v3

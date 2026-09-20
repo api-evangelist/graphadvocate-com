@@ -1,0 +1,24 @@
+# Graph Advocate
+
+> The routing agent for onchain data. Ask in English, get the right subgraph + a live answer. x402-paid, ERC-8004 registered, A2A/MCP-native.
+
+- [Graph Advocate](https://docs.graphadvocate.com/index.md): Ask any blockchain data question in plain English. Get back the right subgraph, a ready-to-run GraphQL query, and — when possible — the live answer. Paid per call in USDC on Base via x402.
+- [Quickstart](https://docs.graphadvocate.com/quickstart.md): 30 seconds from zero to first routing response.
+- [Agent card](https://docs.graphadvocate.com/agent-card.md): A2A discovery metadata — machine-readable agent identity for other agents to call Graph Advocate.
+- [POST /route](https://docs.graphadvocate.com/route.md): Paid routing — pay $0.01 USDC and get an end-to-end answer.
+- [Examples](https://docs.graphadvocate.com/examples.md): Realistic Graph Advocate queries and the responses they produce.
+- [MCP packages](https://docs.graphadvocate.com/mcp-packages.md): Six protocol-specific MCP servers Graph Advocate routes to. All free, all npx-installable, all reading The Graph directly — no Graph Advocate call required.
+- [Hyperliquid trader intelligence](https://docs.graphadvocate.com/hyperliquid.md): Skill-score any Hyperliquid perps trader, evaluate vaults, and screen top traders of a coin — all derived from on-chain ledger events via The Graph's Hyperliquid Token API.
+- [Polymarket trader intelligence](https://docs.graphadvocate.com/polymarket.md): Skill-score any Polymarket wallet, screen a market's holders, and assess ghost-fill counterparty risk — derived from on-chain trade history via The Graph Token API and Pinax's Polymarket REST.
+- [Kalshi derived signals](https://docs.graphadvocate.com/kalshi.md): Three paid endpoints — consensus trend, cross-source spread, and live-sports edge. JOINs and derived scores passthrough APIs can't replicate, on top of Kalshi's fully public REST.
+- [Prediction-market cross-venue spread](https://docs.graphadvocate.com/predmarket.md): One paid endpoint that JOINs Polymarket and Limitless on a topic. Per-pair yes-mid spread, arbitrage direction, and the JOIN single-venue passthroughs structurally can't return.
+- [Uniswap pre-trade & flow](https://docs.graphadvocate.com/uniswap.md): Three paid endpoints over Uniswap subgraphs: pre-trade liquidity checks, spot-vs-perp basis, and per-wallet accumulation. Plus graph-uniswap-mcp for direct tool access.
+- [Narrative vs on-chain flow](https://docs.graphadvocate.com/narrative.md): One paid endpoint that JOINs social momentum with on-chain flow acceleration. Finds tokens loud on social but quiet on-chain — and the inverse, which a social feed structurally cannot see.
+- [Natural-language SQL over x402 settlements](https://docs.graphadvocate.com/ask.md): Ask any question about Base x402 payment activity in plain English. DuckDB + Anthropic Sonnet runs the SQL against a 132M-row Cloudflare R2 parquet warehouse and returns the answer plus the SQL trace so your agent can verify the path.
+- [On-chain x402 address lookup](https://docs.graphadvocate.com/onchain-address.md): Read-only reputation lookup for any Base address against the decentralized x402 Base subgraph on The Graph Network. Returns the address's payer and recipient summaries, recent activity in both directions, facilitator metadata, and the indexed-through block for freshness audit — in a single call.
+- [Agent reputation score](https://docs.graphadvocate.com/agent-score.md): Composite 0-100 reputation score for any Base wallet. Combines ERC-8004 identity, USDC settlement velocity, and on-chain feedback registry events into one auditable score with full signal breakdown. Buyer agents call this to decide whether to integrate with, pay, or trust a peer agent.
+- [Live Bazaar](https://docs.graphadvocate.com/bazaar-active.md): Which x402 services are *actually paid* and *actually verified* right now — joined from 4 live sources nobody else joins.
+- [GET /bazaar/search](https://docs.graphadvocate.com/bazaar-search.md): Keyword search over the full CDP x402 Bazaar (15,000+ paid services).
+- [GET /claw/scout](https://docs.graphadvocate.com/claw-scout.md): Scans Claw Earn marketplace for tasks matching Graph Advocate's skills.
+- [x402 payments](https://docs.graphadvocate.com/x402.md): Graph Advocate accepts and sends x402 payments on Base.
+- [Outbound outreach](https://docs.graphadvocate.com/outreach.md): Let Graph Advocate pay-to-call other x402 agents on your behalf.

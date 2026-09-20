@@ -1,0 +1,38 @@
+generated: '2026-09-19'
+method: searched
+source: >-
+  Provider-published Agent Skills saved VERBATIM: https://graphadvocate.com/skill.md (17,291 bytes, text/markdown,
+  frontmatter name graph-advocate, version 2.11.1) and
+  https://docs.graphadvocate.com/.well-known/agent-skills/graphadvocate/skill.md (12,037 bytes, text/markdown,
+  listed in the docs host's agentskills.io discovery index with sha256 digest
+  f63fe8f1a0ce8e0719a6f40466bb1d9531c80d9691a174e1a5829294a31b5f1e). Nothing was generated here — the provider
+  ships its own skills, so the generated-skill fallback was not used.
+skills:
+- file: graphadvocate-com-graph-advocate.md
+  name: graph-advocate
+  source: https://graphadvocate.com/skill.md
+  version: 2.11.1
+  api: openapi/graphadvocate-com-openapi.yml
+  operations: [routeQuery, hyperliquidScore, hyperliquidPnl, hyperliquidScreen, hyperliquidVault, hyperliquidRisk, hyperliquidFills, polymarketPnlQuick, polymarketPnl, polymarketScreen, polymarketRisk, polymarketLeaders, kalshiConsensusTrend, kalshiSportsLiveEdge, kalshiPolymarketSpread, predmarketSpread, narrativeDivergence, uniswapPretrade, uniswapBasis, uniswapTraders, agentScore, askSettlements, onchainX402Address]
+  description: >-
+    Routing table from user intent to Graph Protocol service (token-api, subgraph-registry, substreams, the six MCP
+    packages, and every paid /hyperliquid, /polymarket, /kalshi, /uniswap, /predmarket, /narrative, /ask,
+    /onchain-x402 and /agent/score endpoint with its USDC price). Frontmatter carries a clawdbot metadata block.
+  note: >-
+    The skill references relative files references/token-api.md, references/subgraph-registry.md, references/aave.md,
+    references/polymarket.md, references/hyperliquid.md, references/x402.md; https://graphadvocate.com/references/
+    token-api.md returned 404 on 2026-09-19, so those companions are shipped inside the npm/openclaw package, not on
+    the web host.
+- file: graphadvocate-com-graphadvocate.md
+  name: Graphadvocate
+  source: https://docs.graphadvocate.com/.well-known/agent-skills/graphadvocate/skill.md
+  version: '1.0'
+  api: openapi/graphadvocate-com-openapi.yml
+  operations: [routeQuery, hyperliquidScore, hyperliquidScreen, hyperliquidVault, polymarketPnlQuick, polymarketScreen, askSettlements]
+  description: >-
+    Mintlify-generated skill (metadata mintlify-proj graphadvocate): product summary, when-to-use, endpoint/pricing
+    quick reference, A2A/MCP/x402 calling patterns.
+discovery:
+  agentskills_index: https://docs.graphadvocate.com/.well-known/agent-skills/index.json
+  index_file: ../well-known/graphadvocate-com-docs-agent-skills-index.json
+  schema: https://schemas.agentskills.io/discovery/0.2.0/schema.json

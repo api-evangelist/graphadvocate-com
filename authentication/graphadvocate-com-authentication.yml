@@ -1,0 +1,59 @@
+generated: '2026-09-19'
+method: searched
+source: >-
+  https://docs.graphadvocate.com/quickstart ("No auth, no keys, nothing to install"), https://graphadvocate.com/llms.txt
+  (Pricing + Identity sections), https://graphadvocate.com/agents/capabilities.json (pricing.free_tier_how), the
+  served OpenAPI (no securitySchemes, no security), the A2A card (no securitySchemes), and one live anonymous POST
+  /route (HTTP 402). derive-authentication.py produced no profile because the spec declares no securitySchemes —
+  that absence is accurate and is the finding.
+docs: https://docs.graphadvocate.com/quickstart
+summary:
+  types: [none, x402-payment]
+  api_key_in: []
+  oauth2_flows: []
+  signup_required: false
+  model: >-
+    Graph Advocate has NO authentication. Access is metered by payment (x402, USDC on Base) and, for the free tier,
+    by a self-asserted wallet address in the A2A message metadata. The provider states this as a design choice:
+    "No signup, no card, no API key — ever." The billing relationship is the calling agent's wallet.
+schemes:
+- name: none
+  type: none
+  applies_to: POST / (A2A), POST /chat, GET /copytrade/*, GET /mcp + POST /mcp (MCP), all discovery documents
+  description: >-
+    Anonymous. POST /chat is free and returns the query to run (never the data). POST / over A2A is free for 3
+    routed queries/day when the sender is identified (below); anonymous A2A calls are charged from call 1.
+  sources: [quickstart, llms.txt, capabilities.json]
+- name: x402
+  type: payment
+  header: X-PAYMENT
+  challenge: HTTP 402 with `payment-required` header (base64 x402 v2 PaymentRequired) and JSON body accepts[]
+  network: 'eip155:8453 (Base)'
+  asset: USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
+  facilitator: https://api.cdp.coinbase.com/platform/v2/x402 (CDP)
+  applies_to: POST /route, /tip, /ask, /agent/score, /onchain-x402/address, /hyperliquid/*, /polymarket/*, /kalshi/*, /kalshi-polymarket/spread, /predmarket/spread, /narrative/divergence, /uniswap/*
+  description: >-
+    The client signs an EIP-3009 transferWithAuthorization for the quoted amount and retries with X-PAYMENT; the
+    facilitator verifies and settles, then the handler runs. Over A2A the same payment can be carried by prefixing
+    the message text with `x402:<signed-payment>` (card extension description).
+  observed: {url: https://graphadvocate.com/route, http_status: 402, fetched: '2026-09-19'}
+  sources: [agent card capabilities.extensions, docs x402 page, live 402]
+- name: identified-sender
+  type: self-asserted-identity
+  location: A2A request `params.metadata.sender` (or `address`) — a 42-char 0x EVM address
+  description: >-
+    Not a credential. Presence of a wallet address in message metadata claims the 3/day free routing allowance;
+    the provider notes a bare `name` no longer qualifies because rotating names minted unlimited free buckets.
+    Nothing is verified about the address at request time; abuse is bounded by the quota.
+  sources: [capabilities.json pricing.free_tier_how, llms.txt, quickstart]
+- name: admin-bearer
+  type: http
+  scheme: bearer
+  applies_to: GET /quality, GET /export/stats, POST /admin/outreach-pay
+  description: Operator-only endpoints require Authorization Bearer <ADMIN_TOKEN>. Not available to the public and not in the OpenAPI; recorded so no one mistakes it for a customer auth path.
+  sources: [llms.txt, docs x402 page]
+downstream_keys_the_router_hands_you:
+  note: >-
+    Responses often include a curl for The Graph gateway; running THAT needs the caller's own free Graph API key
+    (thegraph.com/studio, 100K queries/month) or Token API JWT (thegraph.market). Those are third-party
+    credentials for The Graph, not Graph Advocate credentials.

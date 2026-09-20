@@ -1,0 +1,71 @@
+generated: '2026-09-19'
+method: derived
+source: >-
+  Derived by aligning the LIVE MCP tools/list result (mcp/graphadvocate-com-mcp-tools.json, 3 tools, fetched
+  anonymously 2026-09-19) with the provider-served OpenAPI 3.1.0 (openapi/graphadvocate-com-openapi.yml, 23
+  operations, all POST). Confidence per row.
+purpose: >-
+  Graph Advocate exposes THREE projections of one routing core: A2A JSON-RPC at POST / (free tier), REST at
+  /route + 22 paid endpoints (x402), and MCP at /mcp. The MCP surface is deliberately narrow — it routes and
+  recommends — while the REST surface carries every paid trader-intelligence endpoint. Neither is a superset.
+surfaces:
+  rest_openapi: openapi/graphadvocate-com-openapi.yml     # 23 operations, 2 schemas; served at https://graphadvocate.com/openapi.json
+  a2a: https://graphadvocate.com/                          # JSON-RPC 2.0 message/send; card at /.well-known/agent-card.json
+  mcp: https://graphadvocate.com/mcp                       # tools/list NOT gated — schemas are real, not inferred
+  graphql: null                                            # Graph Advocate itself has no GraphQL endpoint; it RETURNS GraphQL for The Graph gateway
+crosswalk:
+- tool: route_data_request
+  category: routing
+  rest: [routeQuery]
+  binding: rest
+  confidence: high
+  note: >-
+    Same routing model. MCP input {request, session_id?} maps to RoutingRequest {request}; the REST operation is
+    x402-gated ($0.01 USDC) while the MCP tool and POST / A2A path carry the 3/day identified-sender free tier.
+    The MCP tool returns "the exact tool + args to use" — the RoutingResponse.query_ready object.
+- tool: recommend_npm_package
+  category: routing
+  rest: []
+  binding: none
+  confidence: high
+  note: >-
+    Backed by GET /mcp/catalog (six protocol-specific MCP servers with install commands), which is served but not
+    declared in the OpenAPI. Listed under mcp_only because no OpenAPI operation exists.
+- tool: compare_graph_services
+  category: routing
+  rest: []
+  binding: none
+  confidence: medium
+  note: >-
+    Ranks Graph Protocol services (token-api, subgraph-registry, substreams, MCP packages) for a use case — the
+    `alternatives[]` portion of RoutingResponse exposed as its own tool. No dedicated REST operation.
+mcp_only:
+- tool: recommend_npm_package
+  reason: Served from /mcp/catalog; no OpenAPI operation.
+- tool: compare_graph_services
+  reason: Server-side composite over the routing model; no OpenAPI operation.
+rest_only:
+- capability: trader intelligence — Hyperliquid
+  operations: [hyperliquidFills, hyperliquidPnl, hyperliquidRisk, hyperliquidScore, hyperliquidScreen, hyperliquidVault]
+- capability: trader intelligence — Polymarket
+  operations: [polymarketPnl, polymarketPnlQuick, polymarketRisk, polymarketScreen, polymarketLeaders]
+- capability: prediction-market derived signals — Kalshi / cross-venue
+  operations: [kalshiConsensusTrend, kalshiSportsLiveEdge, kalshiPolymarketSpread, predmarketSpread]
+- capability: Uniswap pre-trade and flow
+  operations: [uniswapBasis, uniswapPretrade, uniswapTraders]
+- capability: x402 settlement analytics + agent reputation
+  operations: [askSettlements, onchainX402Address, agentScore]
+- capability: narrative vs flow
+  operations: [narrativeDivergence]
+coverage:
+  mcp_tools_named: 3
+  mcp_tools_bound_to_rest: 1
+  mcp_only: 2
+  rest_operations_total: 23
+  rest_operations_with_a_tool: 1
+  rest_only: 22
+  a2a_skills_declared: 26
+  note: >-
+    The A2A card declares 26 skills that map roughly one-to-one onto the 22 paid REST endpoints plus the four free
+    routing skills (find_subgraph, write_query, onchain_data, polymarket_data); the MCP server collapses all of
+    that behind route_data_request. An agent needing a paid trader-intelligence result must use REST/A2A, not MCP.

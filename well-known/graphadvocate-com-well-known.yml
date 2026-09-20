@@ -1,0 +1,112 @@
+generated: '2026-09-19'
+method: probed
+source: live probes of /.well-known/ on graphadvocate.com and docs.graphadvocate.com, 2026-09-19
+summary: >-
+  Three real /.well-known/ documents are served on the primary host — the A2A agent card at the canonical
+  /.well-known/agent-card.json, the same card at the legacy /.well-known/agent.json (with an in-band _deprecation
+  block), and an x402 Bazaar discovery document at /.well-known/x402 listing 24 paid resource URLs. The docs host
+  serves its own Mintlify-generated agent card plus an agentskills.io discovery index at
+  /.well-known/agent-skills/index.json. Nothing else is served anywhere: no security.txt (so NO SecurityTxt
+  pointer), no OIDC discovery, no RFC 8414 / RFC 9728 OAuth metadata (the API has no OAuth — payment is x402), no
+  api-catalog, no ai-plugin.json, no mcp.json.
+pointer_basis: >-
+  WellKnown pointer emitted on the strength of the 200s on graphadvocate.com/.well-known/agent-card.json,
+  /.well-known/agent.json and /.well-known/x402 (all application/json, all parsed). SecurityTxt NOT emitted.
+false_positive_watch: >-
+  docs.graphadvocate.com answers /.well-known/openid-configuration with HTTP 404 but a 104,669-byte text/html body
+  (the Mintlify not-found page) — recorded as a miss. www.graphadvocate.com presents a certificate that does not
+  cover the www name (curl error 60), so it could not be probed; the provider's canonical host is the bare apex.
+mcp_host_note: >-
+  The MCP server lives on the primary host (https://graphadvocate.com/mcp), so the RFC 9728 protected-resource probe
+  on the MCP host IS the primary-host probe below: /.well-known/oauth-protected-resource -> 404. There is no
+  separate MCP host and no authorization server to probe.
+hosts:
+- host: https://graphadvocate.com
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: application/json
+    file: ../a2a/graphadvocate-com-agent-card.json
+  - path: /.well-known/agent.json
+    status: 200
+    content_type: application/json
+    file: ../a2a/graphadvocate-com-legacy-agent.json
+    note: legacy A2A path; body carries _deprecation -> /.well-known/agent-card.json
+  - path: /.well-known/x402
+    status: 200
+    content_type: application/json
+    file: graphadvocate-com-x402.json
+    note: x402 Bazaar discovery — version 1, 24 resources, instructions, documentation, capabilities, catalogs
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/agent-skills/index.json
+    status: 404
+  - path: /.well-known/erc8004-registration.json
+    status: 404
+- host: https://docs.graphadvocate.com
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: application/json
+    file: ../a2a/graphadvocate-com-docs-agent-card.json
+    note: Mintlify-generated secondary card; see a2a manifest secondary_cards
+  - path: /.well-known/agent-skills/index.json
+    status: 200
+    content_type: application/json
+    file: graphadvocate-com-docs-agent-skills-index.json
+    note: agentskills.io discovery/0.2.0 index; one skill-md with sha256 digest
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+    note: 404 with a 104KB HTML not-found body — not a document
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://www.graphadvocate.com
+  documents: []
+  note: TLS certificate does not cover www (curl exit 60) — unprobeable; apex is canonical
+discovery_documents_outside_well_known:
+  note: >-
+    Provider-served machine-readable discovery documents that live OUTSIDE /.well-known/ and therefore are NOT
+    listed in hosts[].documents[] (which the scorer reads as well-known hits). Saved here for completeness.
+  documents:
+  - url: https://graphadvocate.com/agents/index.json
+    status: 200
+    file: graphadvocate-com-agents-index.json
+    note: points at capabilities.json, agent card, llms.txt and openapi.json; start_here = llms.txt
+  - url: https://graphadvocate.com/agents/capabilities.json
+    status: 200
+    file: graphadvocate-com-agents-capabilities.json
+    note: per-service capability list, pricing block, 22 paid endpoints with base-unit amounts, settlement block
+  - url: https://graphadvocate.com/openapi.json
+    status: 200
+    file: ../openapi/_original/graphadvocate-com-openapi.json
+  - url: https://graphadvocate.com/llms.txt
+    status: 200
+    file: ../llms/graphadvocate-com-llms.txt
+  - url: https://graphadvocate.com/mcp/catalog
+    status: 200
+    file: ../mcp/graphadvocate-com-mcp-catalog.json
+  - url: https://graphadvocate.com/health
+    status: 200
+    note: '{"status":"ok","service":"graph-advocate","agent_card":"/.well-known/agent-card.json","discovery":"/.well-known/x402"}'
