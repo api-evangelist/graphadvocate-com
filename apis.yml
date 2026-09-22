@@ -21,6 +21,21 @@ created: '2026-09-19'
 modified: '2026-09-19'
 tags:
 - Blockchain
+- On-Chain Data
+- The Graph
+- Subgraph
+- GraphQL
+- MCP
+- A2A
+- x402
+- Agentic Commerce
+- AI Agents
+- DeFi
+- Prediction Markets
+- Trader Intelligence
+- Web3
+tags_raw:
+- Blockchain
 - Onchain Data
 - The Graph
 - Subgraphs
@@ -47,6 +62,15 @@ apis:
   humanURL: https://docs.graphadvocate.com/
   baseURL: https://graphadvocate.com
   tags:
+  - Blockchain
+  - On-Chain Data
+  - The Graph
+  - GraphQL
+  - x402
+  - A2A
+  - Prediction Markets
+  - Trader Intelligence
+  tags_raw:
   - Blockchain
   - Onchain Data
   - The Graph
@@ -90,6 +114,11 @@ apis:
   humanURL: https://docs.graphadvocate.com/quickstart
   baseURL: https://graphadvocate.com/mcp
   tags:
+  - MCP
+  - AI Agents
+  - The Graph
+  - On-Chain Data
+  tags_raw:
   - MCP
   - AI Agents
   - The Graph
