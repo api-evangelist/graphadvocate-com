@@ -1,3 +1,5 @@
+# x-archived-from: graphadvocate-com-openapi.yml
+# x-archived-on: 2026-09-26
 # Verbatim conversion (JSON -> YAML) of https://graphadvocate.com/openapi.json fetched 2026-09-19 (HTTP 200, application/json).
 # Original preserved at openapi/_original/graphadvocate-com-openapi.json. No content added or removed.
 openapi: 3.1.0

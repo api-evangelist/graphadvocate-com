@@ -1,0 +1,205 @@
+openapi: 3.2.0
+info:
+  title: Graphadvocate Com Polymarket API
+  version: 1.0.0
+  contact:
+    name: Graph Advocate
+    url: https://graphadvocate.com
+  description: 'Operations tagged Polymarket across 2 of this provider''s published API definitions: graphadvocate-com-openapi.json, graphadvocate-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://graphadvocate.com
+tags:
+- name: Polymarket
+paths:
+  /polymarket/pnl:
+    post:
+      operationId: polymarketPnl
+      summary: Full Polymarket trader dossier
+      description: 'Full Polymarket trader dossier: skill scores plus per-position aggregates with mark-to-market unrealized PnL.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Result
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment required
+          content:
+            application/json:
+              schema:
+                type: object
+      x-payment-info:
+        protocols:
+        - x402: {}
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.05'
+      tags:
+      - Polymarket
+    servers:
+    - url: https://graphadvocate.com
+  /polymarket/pnl-quick:
+    post:
+      operationId: polymarketPnlQuick
+      summary: Fast derived skill metrics for a Polymarket wallet
+      description: 'Fast derived skill metrics for a Polymarket wallet: skill score, classification, realized PnL, win rate.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Result
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment required
+          content:
+            application/json:
+              schema:
+                type: object
+      x-payment-info:
+        protocols:
+        - x402: {}
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.01'
+      tags:
+      - Polymarket
+    servers:
+    - url: https://graphadvocate.com
+  /polymarket/risk:
+    post:
+      operationId: polymarketRisk
+      summary: Polymarket ghost-fill risk
+      description: 'Polymarket ghost-fill risk: wallet-type detection plus risk score for counterparty assessment.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Result
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment required
+          content:
+            application/json:
+              schema:
+                type: object
+      x-payment-info:
+        protocols:
+        - x402: {}
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.02'
+      tags:
+      - Polymarket
+    servers:
+    - url: https://graphadvocate.com
+  /polymarket/screen:
+    post:
+      operationId: polymarketScreen
+      summary: Top holders of a Polymarket market, each with skill score and ghost-fill risk
+      description: Top holders of a Polymarket market, each with skill score and ghost-fill risk.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Result
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment required
+          content:
+            application/json:
+              schema:
+                type: object
+      x-payment-info:
+        protocols:
+        - x402: {}
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.02'
+      tags:
+      - Polymarket
+    servers:
+    - url: https://graphadvocate.com
+  /polymarket/leaders:
+    post:
+      operationId: polymarketLeaders
+      summary: Top Polymarket traders leaderboard ranked by PnL or volume over a window — the…
+      description: Top Polymarket traders leaderboard ranked by PnL or volume over a window — the discovery/copy-trade counterpart to the per-wallet skill endpoints.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Result
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment required
+          content:
+            application/json:
+              schema:
+                type: object
+      x-payment-info:
+        protocols:
+        - x402: {}
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.02'
+      tags:
+      - Polymarket
+    servers:
+    - url: https://graphadvocate.com
+externalDocs:
+  description: LLM-readable docs (llmstxt.org convention)
+  url: https://graphadvocate.com/llms.txt
+x-refined-from:
+- graphadvocate-com-openapi.json
+- graphadvocate-com-openapi.yml
+x-discovery:
+  ownershipProofs: []
+  agent:
+    name: Graph Advocate
+    ens: graphadvocate.eth
+    erc8004: 'Agent #734 on Arbitrum'
+    wallet: '0x0FF5A6ecef783BBA35463ec2F8403B9B5e9e7C86'
+    llms_txt: https://graphadvocate.com/llms.txt
+    capabilities: https://graphadvocate.com/agents/capabilities.json
+x-llms-txt: https://graphadvocate.com/llms.txt
+x-agents-index: https://graphadvocate.com/agents/index.json

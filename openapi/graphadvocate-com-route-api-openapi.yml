@@ -1,0 +1,142 @@
+openapi: 3.2.0
+info:
+  title: Graphadvocate Com Route API
+  version: 1.0.0
+  contact:
+    name: Graph Advocate
+    url: https://graphadvocate.com
+  description: 'Operations tagged Route across 2 of this provider''s published API definitions: graphadvocate-com-openapi.json, graphadvocate-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://graphadvocate.com
+tags:
+- name: Route
+paths:
+  /route:
+    post:
+      operationId: routeQuery
+      summary: Route an onchain data request
+      description: POST a plain-English request via A2A JSON-RPC 2.0 (`message/send`) and receive a ready-to-execute query, the right subgraph ID, an MCP install hint, and a working curl example. Powered by Claude with auto-search across 15,500+ subgraphs.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoutingRequest'
+      responses:
+        '200':
+          description: Routing recommendation with ready-to-run query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutingResponse'
+        '402':
+          description: Payment required
+          content:
+            application/json:
+              schema:
+                type: object
+      x-payment-info:
+        protocols:
+        - x402: {}
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.01'
+      tags:
+      - Route
+    servers:
+    - url: https://graphadvocate.com
+components:
+  schemas:
+    RoutingResponse:
+      type: object
+      properties:
+        recommendation:
+          type: string
+          description: Service to use (e.g. graph-aave-mcp, subgraph-registry, token-api)
+        reason:
+          type: string
+        confidence:
+          type: string
+          enum:
+          - high
+          - medium
+          - low
+        query_ready:
+          type: object
+          description: Tool name + args you can call directly
+          properties:
+            tool:
+              type: string
+            args:
+              type: object
+        curl_example:
+          type: string
+        install:
+          type: string
+          description: npm install / npx command if applicable
+        alternatives:
+          type: array
+    RoutingRequest:
+      type: object
+      required:
+      - jsonrpc
+      - id
+      - method
+      - params
+      properties:
+        jsonrpc:
+          type: string
+          const: '2.0'
+        id:
+          type:
+          - string
+          - number
+        method:
+          type: string
+          const: message/send
+        params:
+          type: object
+          required:
+          - message
+          properties:
+            message:
+              type: object
+              required:
+              - role
+              - messageId
+              - parts
+              properties:
+                role:
+                  type: string
+                  const: user
+                messageId:
+                  type: string
+                parts:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      kind:
+                        type: string
+                        const: text
+                      text:
+                        type: string
+                        description: Plain-English onchain data request
+externalDocs:
+  description: LLM-readable docs (llmstxt.org convention)
+  url: https://graphadvocate.com/llms.txt
+x-refined-from:
+- graphadvocate-com-openapi.json
+- graphadvocate-com-openapi.yml
+x-discovery:
+  ownershipProofs: []
+  agent:
+    name: Graph Advocate
+    ens: graphadvocate.eth
+    erc8004: 'Agent #734 on Arbitrum'
+    wallet: '0x0FF5A6ecef783BBA35463ec2F8403B9B5e9e7C86'
+    llms_txt: https://graphadvocate.com/llms.txt
+    capabilities: https://graphadvocate.com/agents/capabilities.json
+x-llms-txt: https://graphadvocate.com/llms.txt
+x-agents-index: https://graphadvocate.com/agents/index.json

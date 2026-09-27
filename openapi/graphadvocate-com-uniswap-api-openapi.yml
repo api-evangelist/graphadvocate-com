@@ -1,0 +1,135 @@
+openapi: 3.2.0
+info:
+  title: Graphadvocate Com Uniswap API
+  version: 1.0.0
+  contact:
+    name: Graph Advocate
+    url: https://graphadvocate.com
+  description: 'Operations tagged Uniswap across 2 of this provider''s published API definitions: graphadvocate-com-openapi.json, graphadvocate-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://graphadvocate.com
+tags:
+- name: Uniswap
+paths:
+  /uniswap/basis:
+    post:
+      operationId: uniswapBasis
+      summary: Uniswap spot vs Hyperliquid perp basis for one asset — a cross-venue JOIN…
+      description: Uniswap spot vs Hyperliquid perp basis for one asset — a cross-venue JOIN returning basis_pct and a perp_premium/perp_discount/aligned signal.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Result
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment required
+          content:
+            application/json:
+              schema:
+                type: object
+      x-payment-info:
+        protocols:
+        - x402: {}
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.05'
+      tags:
+      - Uniswap
+    servers:
+    - url: https://graphadvocate.com
+  /uniswap/pretrade:
+    post:
+      operationId: uniswapPretrade
+      summary: Uniswap pre-trade due-diligence for a token
+      description: 'Uniswap pre-trade due-diligence for a token: real liquidity, deepest venue ranked by volume (not TVL), honeypot two-way-flow check, daily volume trend, and a tradeable/risk verdict.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Result
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment required
+          content:
+            application/json:
+              schema:
+                type: object
+      x-payment-info:
+        protocols:
+        - x402: {}
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.02'
+      tags:
+      - Uniswap
+    servers:
+    - url: https://graphadvocate.com
+  /uniswap/traders:
+    post:
+      operationId: uniswapTraders
+      summary: Per-wallet Uniswap flow on a token's deepest venue
+      description: 'Per-wallet Uniswap flow on a token''s deepest venue: accumulators vs distributors with trader EOAs, buys/sells and volume_usd.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Result
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment required
+          content:
+            application/json:
+              schema:
+                type: object
+      x-payment-info:
+        protocols:
+        - x402: {}
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.02'
+      tags:
+      - Uniswap
+    servers:
+    - url: https://graphadvocate.com
+externalDocs:
+  description: LLM-readable docs (llmstxt.org convention)
+  url: https://graphadvocate.com/llms.txt
+x-refined-from:
+- graphadvocate-com-openapi.json
+- graphadvocate-com-openapi.yml
+x-discovery:
+  ownershipProofs: []
+  agent:
+    name: Graph Advocate
+    ens: graphadvocate.eth
+    erc8004: 'Agent #734 on Arbitrum'
+    wallet: '0x0FF5A6ecef783BBA35463ec2F8403B9B5e9e7C86'
+    llms_txt: https://graphadvocate.com/llms.txt
+    capabilities: https://graphadvocate.com/agents/capabilities.json
+x-llms-txt: https://graphadvocate.com/llms.txt
+x-agents-index: https://graphadvocate.com/agents/index.json

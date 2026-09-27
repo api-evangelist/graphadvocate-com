@@ -10,6 +10,22 @@ description: >-
   Base via x402 (HTTP 402 + PAYMENT-REQUIRED header), and the agent is registered as ERC-8004 agent #734 (Arbitrum)
   and #41034 (Base) under the ENS name graphadvocate.eth. The author also publishes six npx-installable MCP servers
   (Aave, Uniswap, Polymarket, lending, Limitless) that read The Graph directly.
+deliveryModel:
+  model: saas
+  license_evidence:
+    not_product:
+    - paulieb14/graph-advocate
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
 image: https://graphadvocate.com/graphadvocate.png
 url: https://raw.githubusercontent.com/api-evangelist/graphadvocate-com/refs/heads/main/apis.yml
 x-type: company
@@ -50,66 +66,14 @@ tags_raw:
 - Trader Intelligence
 - Web3
 apis:
-- name: Graph Advocate API
-  description: >-
-    Routing and trader-intelligence API at graphadvocate.com. POST / speaks A2A JSON-RPC 2.0 (message/send) and is the
-    free tier (3 routed queries/day per wallet-identified sender); POST /route and 22 further POST endpoints
-    (/hyperliquid/*, /polymarket/*, /kalshi/*, /uniswap/*, /predmarket/spread, /narrative/divergence, /ask,
-    /onchain-x402/address, /agent/score) are x402-gated at $0.01-$0.10 USDC on Base and answer 402 with x402 v2
-    PaymentRequirements until an X-PAYMENT header is presented. All 23 operations in the published OpenAPI 3.1.0 are
-    read-style queries; there is no API key, OAuth or signup.
-  image: https://graphadvocate.com/graphadvocate.png
-  humanURL: https://docs.graphadvocate.com/
-  baseURL: https://graphadvocate.com
-  tags:
-  - Blockchain
-  - On-Chain Data
-  - The Graph
-  - GraphQL
-  - x402
-  - A2A
-  - Prediction Markets
-  - Trader Intelligence
-  tags_raw:
-  - Blockchain
-  - Onchain Data
-  - The Graph
-  - GraphQL
-  - x402
-  - A2A
-  - Prediction Markets
-  - Trader Intelligence
-  properties:
-  - type: OpenAPI
-    url: openapi/graphadvocate-com-openapi.yml
-  - type: OpenAPI
-    name: provider-hosted OpenAPI 3.1.0 (source of the local copy)
-    url: https://graphadvocate.com/openapi.json
-  - type: Documentation
-    url: https://docs.graphadvocate.com/
-  - type: APIReference
-    url: https://docs.graphadvocate.com/route
-  - type: GettingStarted
-    url: https://docs.graphadvocate.com/quickstart
-  - type: Overlay
-    url: overlays/graphadvocate-com-openapi-overlay.yaml
-  - type: ErrorCatalog
-    url: errors/graphadvocate-com-problem-types.yml
-  - type: Authentication
-    url: authentication/graphadvocate-com-authentication.yml
-  - type: Conventions
-    url: conventions/graphadvocate-com-conventions.yml
-  - type: RateLimits
-    url: rate-limits/graphadvocate-com-rate-limits.yml
-  - type: Plans
-    url: plans/graphadvocate-com-plans-pricing.yml
 - name: Graph Advocate MCP Server
   description: >-
-    Hosted MCP server at https://graphadvocate.com/mcp (Streamable HTTP for one-shot JSON-RPC initialize and
-    tools/list; SSE session at /mcp/sse). tools/list answers anonymously with three tools — route_data_request,
+    Hosted MCP server at https://graphadvocate.com/mcp (Streamable HTTP for one-shot JSON-RPC initialize
+    and tools/list; SSE session at /mcp/sse). tools/list answers anonymously with three tools — route_data_request,
     recommend_npm_package and compare_graph_services — each carrying a real inputSchema. A stdio companion,
-    graph-advocate-mcp 2.11.1 on npm, wraps the same routing surface for Claude Desktop, Cursor and other local MCP
-    clients. GET /mcp/catalog lists the six protocol-specific MCP servers the router hands off to.
+    graph-advocate-mcp 2.11.1 on npm, wraps the same routing surface for Claude Desktop, Cursor and other
+    local MCP clients. GET /mcp/catalog lists the six protocol-specific MCP servers the router hands off
+    to.
   image: https://graphadvocate.com/graphadvocate.png
   humanURL: https://docs.graphadvocate.com/quickstart
   baseURL: https://graphadvocate.com/mcp
@@ -130,6 +94,292 @@ apis:
     url: mcp/graphadvocate-com-tool-crosswalk.yml
   - type: Documentation
     url: https://docs.graphadvocate.com/mcp-packages
+- aid: graphadvocate-com:graphadvocate-com-agent-api
+  name: PaulieB14 Agent API
+  description: The Agent API from PaulieB14 — 1 operation(s) for agent.
+  humanURL: https://docs.graphadvocate.com/
+  baseURL: https://graphadvocate.com/mcp
+  tags:
+  - Agent
+  properties:
+  - type: OpenAPI
+    url: openapi/graphadvocate-com-agent-api-openapi.yml
+  - type: Documentation
+    url: https://docs.graphadvocate.com/
+  - type: APIReference
+    url: https://docs.graphadvocate.com/route
+  - type: GettingStarted
+    url: https://docs.graphadvocate.com/quickstart
+  - type: ErrorCatalog
+    url: errors/graphadvocate-com-problem-types.yml
+  - type: Authentication
+    url: authentication/graphadvocate-com-authentication.yml
+  - type: Conventions
+    url: conventions/graphadvocate-com-conventions.yml
+  - type: RateLimits
+    url: rate-limits/graphadvocate-com-rate-limits.yml
+  - type: Plans
+    url: plans/graphadvocate-com-plans-pricing.yml
+- aid: graphadvocate-com:graphadvocate-com-ask-api
+  name: PaulieB14 Ask API
+  description: The Ask API from PaulieB14 — 1 operation(s) for ask.
+  humanURL: https://docs.graphadvocate.com/
+  baseURL: https://graphadvocate.com/mcp
+  tags:
+  - Ask
+  properties:
+  - type: OpenAPI
+    url: openapi/graphadvocate-com-ask-api-openapi.yml
+  - type: Documentation
+    url: https://docs.graphadvocate.com/
+  - type: APIReference
+    url: https://docs.graphadvocate.com/route
+  - type: GettingStarted
+    url: https://docs.graphadvocate.com/quickstart
+  - type: ErrorCatalog
+    url: errors/graphadvocate-com-problem-types.yml
+  - type: Authentication
+    url: authentication/graphadvocate-com-authentication.yml
+  - type: Conventions
+    url: conventions/graphadvocate-com-conventions.yml
+  - type: RateLimits
+    url: rate-limits/graphadvocate-com-rate-limits.yml
+  - type: Plans
+    url: plans/graphadvocate-com-plans-pricing.yml
+- aid: graphadvocate-com:graphadvocate-com-hyperliquid-api
+  name: PaulieB14 Hyperliquid API
+  description: The Hyperliquid API from PaulieB14 — 6 operation(s) for hyperliquid.
+  humanURL: https://docs.graphadvocate.com/
+  baseURL: https://graphadvocate.com/mcp
+  tags:
+  - Hyperliquid
+  properties:
+  - type: OpenAPI
+    url: openapi/graphadvocate-com-hyperliquid-api-openapi.yml
+  - type: Documentation
+    url: https://docs.graphadvocate.com/
+  - type: APIReference
+    url: https://docs.graphadvocate.com/route
+  - type: GettingStarted
+    url: https://docs.graphadvocate.com/quickstart
+  - type: ErrorCatalog
+    url: errors/graphadvocate-com-problem-types.yml
+  - type: Authentication
+    url: authentication/graphadvocate-com-authentication.yml
+  - type: Conventions
+    url: conventions/graphadvocate-com-conventions.yml
+  - type: RateLimits
+    url: rate-limits/graphadvocate-com-rate-limits.yml
+  - type: Plans
+    url: plans/graphadvocate-com-plans-pricing.yml
+- aid: graphadvocate-com:graphadvocate-com-kalshi-api
+  name: PaulieB14 Kalshi API
+  description: The Kalshi API from PaulieB14 — 2 operation(s) for kalshi.
+  humanURL: https://docs.graphadvocate.com/
+  baseURL: https://graphadvocate.com/mcp
+  tags:
+  - Kalshi
+  properties:
+  - type: OpenAPI
+    url: openapi/graphadvocate-com-kalshi-api-openapi.yml
+  - type: Documentation
+    url: https://docs.graphadvocate.com/
+  - type: APIReference
+    url: https://docs.graphadvocate.com/route
+  - type: GettingStarted
+    url: https://docs.graphadvocate.com/quickstart
+  - type: ErrorCatalog
+    url: errors/graphadvocate-com-problem-types.yml
+  - type: Authentication
+    url: authentication/graphadvocate-com-authentication.yml
+  - type: Conventions
+    url: conventions/graphadvocate-com-conventions.yml
+  - type: RateLimits
+    url: rate-limits/graphadvocate-com-rate-limits.yml
+  - type: Plans
+    url: plans/graphadvocate-com-plans-pricing.yml
+- aid: graphadvocate-com:graphadvocate-com-kalshi-polymarket-api
+  name: PaulieB14 Kalshi Polymarket API
+  description: The Kalshi Polymarket API from PaulieB14 — 1 operation(s) for kalshi polymarket.
+  humanURL: https://docs.graphadvocate.com/
+  baseURL: https://graphadvocate.com/mcp
+  tags:
+  - Kalshi Polymarket
+  properties:
+  - type: OpenAPI
+    url: openapi/graphadvocate-com-kalshi-polymarket-api-openapi.yml
+  - type: Documentation
+    url: https://docs.graphadvocate.com/
+  - type: APIReference
+    url: https://docs.graphadvocate.com/route
+  - type: GettingStarted
+    url: https://docs.graphadvocate.com/quickstart
+  - type: ErrorCatalog
+    url: errors/graphadvocate-com-problem-types.yml
+  - type: Authentication
+    url: authentication/graphadvocate-com-authentication.yml
+  - type: Conventions
+    url: conventions/graphadvocate-com-conventions.yml
+  - type: RateLimits
+    url: rate-limits/graphadvocate-com-rate-limits.yml
+  - type: Plans
+    url: plans/graphadvocate-com-plans-pricing.yml
+- aid: graphadvocate-com:graphadvocate-com-narrative-api
+  name: PaulieB14 Narrative API
+  description: The Narrative API from PaulieB14 — 1 operation(s) for narrative.
+  humanURL: https://docs.graphadvocate.com/
+  baseURL: https://graphadvocate.com/mcp
+  tags:
+  - Narrative
+  properties:
+  - type: OpenAPI
+    url: openapi/graphadvocate-com-narrative-api-openapi.yml
+  - type: Documentation
+    url: https://docs.graphadvocate.com/
+  - type: APIReference
+    url: https://docs.graphadvocate.com/route
+  - type: GettingStarted
+    url: https://docs.graphadvocate.com/quickstart
+  - type: ErrorCatalog
+    url: errors/graphadvocate-com-problem-types.yml
+  - type: Authentication
+    url: authentication/graphadvocate-com-authentication.yml
+  - type: Conventions
+    url: conventions/graphadvocate-com-conventions.yml
+  - type: RateLimits
+    url: rate-limits/graphadvocate-com-rate-limits.yml
+  - type: Plans
+    url: plans/graphadvocate-com-plans-pricing.yml
+- aid: graphadvocate-com:graphadvocate-com-onchain-x402-api
+  name: PaulieB14 Onchain X402 API
+  description: The Onchain X402 API from PaulieB14 — 1 operation(s) for onchain x402.
+  humanURL: https://docs.graphadvocate.com/
+  baseURL: https://graphadvocate.com/mcp
+  tags:
+  - Onchain X402
+  properties:
+  - type: OpenAPI
+    url: openapi/graphadvocate-com-onchain-x402-api-openapi.yml
+  - type: Documentation
+    url: https://docs.graphadvocate.com/
+  - type: APIReference
+    url: https://docs.graphadvocate.com/route
+  - type: GettingStarted
+    url: https://docs.graphadvocate.com/quickstart
+  - type: ErrorCatalog
+    url: errors/graphadvocate-com-problem-types.yml
+  - type: Authentication
+    url: authentication/graphadvocate-com-authentication.yml
+  - type: Conventions
+    url: conventions/graphadvocate-com-conventions.yml
+  - type: RateLimits
+    url: rate-limits/graphadvocate-com-rate-limits.yml
+  - type: Plans
+    url: plans/graphadvocate-com-plans-pricing.yml
+- aid: graphadvocate-com:graphadvocate-com-polymarket-api
+  name: PaulieB14 Polymarket API
+  description: The Polymarket API from PaulieB14 — 5 operation(s) for polymarket.
+  humanURL: https://docs.graphadvocate.com/
+  baseURL: https://graphadvocate.com/mcp
+  tags:
+  - Polymarket
+  properties:
+  - type: OpenAPI
+    url: openapi/graphadvocate-com-polymarket-api-openapi.yml
+  - type: Documentation
+    url: https://docs.graphadvocate.com/
+  - type: APIReference
+    url: https://docs.graphadvocate.com/route
+  - type: GettingStarted
+    url: https://docs.graphadvocate.com/quickstart
+  - type: ErrorCatalog
+    url: errors/graphadvocate-com-problem-types.yml
+  - type: Authentication
+    url: authentication/graphadvocate-com-authentication.yml
+  - type: Conventions
+    url: conventions/graphadvocate-com-conventions.yml
+  - type: RateLimits
+    url: rate-limits/graphadvocate-com-rate-limits.yml
+  - type: Plans
+    url: plans/graphadvocate-com-plans-pricing.yml
+- aid: graphadvocate-com:graphadvocate-com-predmarket-api
+  name: PaulieB14 Predmarket API
+  description: The Predmarket API from PaulieB14 — 1 operation(s) for predmarket.
+  humanURL: https://docs.graphadvocate.com/
+  baseURL: https://graphadvocate.com/mcp
+  tags:
+  - Predmarket
+  properties:
+  - type: OpenAPI
+    url: openapi/graphadvocate-com-predmarket-api-openapi.yml
+  - type: Documentation
+    url: https://docs.graphadvocate.com/
+  - type: APIReference
+    url: https://docs.graphadvocate.com/route
+  - type: GettingStarted
+    url: https://docs.graphadvocate.com/quickstart
+  - type: ErrorCatalog
+    url: errors/graphadvocate-com-problem-types.yml
+  - type: Authentication
+    url: authentication/graphadvocate-com-authentication.yml
+  - type: Conventions
+    url: conventions/graphadvocate-com-conventions.yml
+  - type: RateLimits
+    url: rate-limits/graphadvocate-com-rate-limits.yml
+  - type: Plans
+    url: plans/graphadvocate-com-plans-pricing.yml
+- aid: graphadvocate-com:graphadvocate-com-route-api
+  name: PaulieB14 Route API
+  description: The Route API from PaulieB14 — 1 operation(s) for route.
+  humanURL: https://docs.graphadvocate.com/
+  baseURL: https://graphadvocate.com/mcp
+  tags:
+  - Route
+  properties:
+  - type: OpenAPI
+    url: openapi/graphadvocate-com-route-api-openapi.yml
+  - type: Documentation
+    url: https://docs.graphadvocate.com/
+  - type: APIReference
+    url: https://docs.graphadvocate.com/route
+  - type: GettingStarted
+    url: https://docs.graphadvocate.com/quickstart
+  - type: ErrorCatalog
+    url: errors/graphadvocate-com-problem-types.yml
+  - type: Authentication
+    url: authentication/graphadvocate-com-authentication.yml
+  - type: Conventions
+    url: conventions/graphadvocate-com-conventions.yml
+  - type: RateLimits
+    url: rate-limits/graphadvocate-com-rate-limits.yml
+  - type: Plans
+    url: plans/graphadvocate-com-plans-pricing.yml
+- aid: graphadvocate-com:graphadvocate-com-uniswap-api
+  name: PaulieB14 Uniswap API
+  description: The Uniswap API from PaulieB14 — 3 operation(s) for uniswap.
+  humanURL: https://docs.graphadvocate.com/
+  baseURL: https://graphadvocate.com/mcp
+  tags:
+  - Uniswap
+  properties:
+  - type: OpenAPI
+    url: openapi/graphadvocate-com-uniswap-api-openapi.yml
+  - type: Documentation
+    url: https://docs.graphadvocate.com/
+  - type: APIReference
+    url: https://docs.graphadvocate.com/route
+  - type: GettingStarted
+    url: https://docs.graphadvocate.com/quickstart
+  - type: ErrorCatalog
+    url: errors/graphadvocate-com-problem-types.yml
+  - type: Authentication
+    url: authentication/graphadvocate-com-authentication.yml
+  - type: Conventions
+    url: conventions/graphadvocate-com-conventions.yml
+  - type: RateLimits
+    url: rate-limits/graphadvocate-com-rate-limits.yml
+  - type: Plans
+    url: plans/graphadvocate-com-plans-pricing.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -199,3 +449,17 @@ x-enrichment:
   status: enriched
   artifacts_added: 32
   pass: local-v3
+x-x402:
+  verified: true
+  probed: '2026-09-24'
+  url: "https://graphadvocate.com/ask"
+  evidence:
+  - "body:x402Version"
+  control: 404
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://graphadvocate.com/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3.0"
+  control: 404

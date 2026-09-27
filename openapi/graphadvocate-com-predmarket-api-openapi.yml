@@ -1,0 +1,65 @@
+openapi: 3.2.0
+info:
+  title: Graphadvocate Com Predmarket API
+  version: 1.0.0
+  contact:
+    name: Graph Advocate
+    url: https://graphadvocate.com
+  description: 'Operations tagged Predmarket across 2 of this provider''s published API definitions: graphadvocate-com-openapi.json, graphadvocate-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://graphadvocate.com
+tags:
+- name: Predmarket
+paths:
+  /predmarket/spread:
+    post:
+      operationId: predmarketSpread
+      summary: Polymarket vs Limitless cross-venue spread on a topic — JOIN that single-venue…
+      description: Polymarket vs Limitless cross-venue spread on a topic — JOIN that single-venue APIs cannot return; arbitrage direction included.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Result
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment required
+          content:
+            application/json:
+              schema:
+                type: object
+      x-payment-info:
+        protocols:
+        - x402: {}
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.05'
+      tags:
+      - Predmarket
+    servers:
+    - url: https://graphadvocate.com
+externalDocs:
+  description: LLM-readable docs (llmstxt.org convention)
+  url: https://graphadvocate.com/llms.txt
+x-refined-from:
+- graphadvocate-com-openapi.json
+- graphadvocate-com-openapi.yml
+x-discovery:
+  ownershipProofs: []
+  agent:
+    name: Graph Advocate
+    ens: graphadvocate.eth
+    erc8004: 'Agent #734 on Arbitrum'
+    wallet: '0x0FF5A6ecef783BBA35463ec2F8403B9B5e9e7C86'
+    llms_txt: https://graphadvocate.com/llms.txt
+    capabilities: https://graphadvocate.com/agents/capabilities.json
+x-llms-txt: https://graphadvocate.com/llms.txt
+x-agents-index: https://graphadvocate.com/agents/index.json

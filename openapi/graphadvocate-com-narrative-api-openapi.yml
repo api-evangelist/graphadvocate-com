@@ -1,0 +1,65 @@
+openapi: 3.2.0
+info:
+  title: Graphadvocate Com Narrative API
+  version: 1.0.0
+  contact:
+    name: Graph Advocate
+    url: https://graphadvocate.com
+  description: 'Operations tagged Narrative across 2 of this provider''s published API definitions: graphadvocate-com-openapi.json, graphadvocate-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://graphadvocate.com
+tags:
+- name: Narrative
+paths:
+  /narrative/divergence:
+    post:
+      operationId: narrativeDivergence
+      summary: Narrative-vs-flow divergence
+      description: 'Narrative-vs-flow divergence: social momentum (Cambrian deep42) JOINed with on-chain flow acceleration from a Uniswap subgraph. Finds tokens loud on social but quiet on-chain, and the reverse — a JOIN neither a social feed nor a chain indexer can return alone.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Result
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment required
+          content:
+            application/json:
+              schema:
+                type: object
+      x-payment-info:
+        protocols:
+        - x402: {}
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.05'
+      tags:
+      - Narrative
+    servers:
+    - url: https://graphadvocate.com
+externalDocs:
+  description: LLM-readable docs (llmstxt.org convention)
+  url: https://graphadvocate.com/llms.txt
+x-refined-from:
+- graphadvocate-com-openapi.json
+- graphadvocate-com-openapi.yml
+x-discovery:
+  ownershipProofs: []
+  agent:
+    name: Graph Advocate
+    ens: graphadvocate.eth
+    erc8004: 'Agent #734 on Arbitrum'
+    wallet: '0x0FF5A6ecef783BBA35463ec2F8403B9B5e9e7C86'
+    llms_txt: https://graphadvocate.com/llms.txt
+    capabilities: https://graphadvocate.com/agents/capabilities.json
+x-llms-txt: https://graphadvocate.com/llms.txt
+x-agents-index: https://graphadvocate.com/agents/index.json
