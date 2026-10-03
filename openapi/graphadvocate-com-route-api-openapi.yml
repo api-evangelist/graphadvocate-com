@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
-  title: Graphadvocate Com Route API
+  title: Graph Advocate Route API
   version: 1.0.0
+  description: Claude-powered routing agent for The Graph Protocol. Send a plain-English onchain data request and receive a ready-to-execute GraphQL query, the right subgraph ID, and an MCP/npm install hint.
   contact:
     name: Graph Advocate
     url: https://graphadvocate.com
-  description: 'Operations tagged Route across 2 of this provider''s published API definitions: graphadvocate-com-openapi.json, graphadvocate-com-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://graphadvocate.com
 tags:
@@ -44,39 +44,8 @@ paths:
           amount: '0.01'
       tags:
       - Route
-    servers:
-    - url: https://graphadvocate.com
 components:
   schemas:
-    RoutingResponse:
-      type: object
-      properties:
-        recommendation:
-          type: string
-          description: Service to use (e.g. graph-aave-mcp, subgraph-registry, token-api)
-        reason:
-          type: string
-        confidence:
-          type: string
-          enum:
-          - high
-          - medium
-          - low
-        query_ready:
-          type: object
-          description: Tool name + args you can call directly
-          properties:
-            tool:
-              type: string
-            args:
-              type: object
-        curl_example:
-          type: string
-        install:
-          type: string
-          description: npm install / npx command if applicable
-        alternatives:
-          type: array
     RoutingRequest:
       type: object
       required:
@@ -123,12 +92,38 @@ components:
                       text:
                         type: string
                         description: Plain-English onchain data request
+    RoutingResponse:
+      type: object
+      properties:
+        recommendation:
+          type: string
+          description: Service to use (e.g. graph-aave-mcp, subgraph-registry, token-api)
+        reason:
+          type: string
+        confidence:
+          type: string
+          enum:
+          - high
+          - medium
+          - low
+        query_ready:
+          type: object
+          description: Tool name + args you can call directly
+          properties:
+            tool:
+              type: string
+            args:
+              type: object
+        curl_example:
+          type: string
+        install:
+          type: string
+          description: npm install / npx command if applicable
+        alternatives:
+          type: array
 externalDocs:
   description: LLM-readable docs (llmstxt.org convention)
   url: https://graphadvocate.com/llms.txt
-x-refined-from:
-- graphadvocate-com-openapi.json
-- graphadvocate-com-openapi.yml
 x-discovery:
   ownershipProofs: []
   agent:

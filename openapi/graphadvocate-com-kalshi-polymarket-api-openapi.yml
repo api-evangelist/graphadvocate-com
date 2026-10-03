@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
-  title: Graphadvocate Com Kalshi Polymarket API
+  title: Graph Advocate Kalshi Polymarket API
   version: 1.0.0
+  description: Claude-powered routing agent for The Graph Protocol. Send a plain-English onchain data request and receive a ready-to-execute GraphQL query, the right subgraph ID, and an MCP/npm install hint.
   contact:
     name: Graph Advocate
     url: https://graphadvocate.com
-  description: 'Operations tagged Kalshi Polymarket across 2 of this provider''s published API definitions: graphadvocate-com-openapi.json, graphadvocate-com-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://graphadvocate.com
 tags:
@@ -44,14 +44,9 @@ paths:
           amount: '0.05'
       tags:
       - Kalshi Polymarket
-    servers:
-    - url: https://graphadvocate.com
 externalDocs:
   description: LLM-readable docs (llmstxt.org convention)
   url: https://graphadvocate.com/llms.txt
-x-refined-from:
-- graphadvocate-com-openapi.json
-- graphadvocate-com-openapi.yml
 x-discovery:
   ownershipProofs: []
   agent:
