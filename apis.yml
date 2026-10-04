@@ -35,6 +35,9 @@ x-tier-reason: enrichment pass 2026-09-19 (local-v3) — real OpenAPI, A2A card,
 specificationVersion: '0.20'
 created: '2026-09-19'
 modified: '2026-09-19'
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 tags:
 - Blockchain
 - On-Chain Data
@@ -100,6 +103,8 @@ apis:
   humanURL: https://docs.graphadvocate.com/
   baseURL: https://graphadvocate.com/mcp
   tags:
+  - Agents
+  tags_raw:
   - Agent
   properties:
   - type: OpenAPI
