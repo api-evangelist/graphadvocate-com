@@ -1,0 +1,12 @@
+{
+ "url": "https://graphadvocate.com/openapi.json",
+ "requested_url": "https://graphadvocate.com/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 18671,
+ "sha256": "47cdf2d633e7dec693b0bc02b81ba848778150e994c73799e91cb022cc4d6b10",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
