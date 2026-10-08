@@ -68,3 +68,22 @@ free_surfaces:
 - GET /.well-known/agent-card.json, /.well-known/x402, /agents/capabilities.json, /llms.txt, /openapi.json, /mcp (tools/list), /mcp/catalog, /health
 - Greetings, introductions and registry discovery probes over A2A ("always free")
 enterprise: none — no contact-sales tier, no volume pricing published
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  units: []
+  plans:
+  - name: Free (identified sender)
+    access: other
+    model: metered
+    model_how: derived
+    units: []
+    periods: []
+  - name: Pay-per-call (x402)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
