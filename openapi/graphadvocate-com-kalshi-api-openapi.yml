@@ -91,3 +91,9 @@ x-discovery:
     capabilities: https://graphadvocate.com/agents/capabilities.json
 x-llms-txt: https://graphadvocate.com/llms.txt
 x-agents-index: https://graphadvocate.com/agents/index.json
+x-provenance:
+  method: harvested
+  publisher: PaulieB14
+  source: https://graphadvocate.com/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
