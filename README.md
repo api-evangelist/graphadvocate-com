@@ -64,5 +64,132 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-PaulieB14 is a company surfaced via the API Evangelist harvest backlog (source: a2a-registry) and added to the network as a stub for full-pipeline profiling.
-- https://graphadvocate.com/
+PaulieB14 (GitHub handle of the Graph Advocate author; provider.organization in the published A2A agent card) operates Graph Advocate, an onchain-data routing agent for The Graph Protocol at graphadvocate.com. Agents send a plain-English blockchain data question over A2A JSON-RPC 2.0, REST or MCP and receive the best subgraph among 15,500+ indexed on The Graph, a ready-to-run GraphQL query and, on paid calls, the executed rows. Twenty-two paid endpoints add derived trader intelligence for Hyperliquid perps, Polymarket, Kalshi, Limitless and Uniswap plus natural-language SQL over x402 settlements on Base. There are no API keys or signups: paid calls settle in USDC on Base via x402 (HTTP 402 + PAYMENT-REQUIRED header), and the agent is registered as ERC-8004 agent #734 (Arbitrum) and #41034 (Base) under the ENS name graphadvocate.eth. The author also publishes six npx-installable MCP servers (Aave, Uniswap, Polymarket, lending, Limitless) that read The Graph directly.
+
+**Areas:** Blockchain · On-Chain Data · The Graph · Subgraph · GraphQL · MCP · A2A · x402 · Agentic Commerce · AI Agents · DeFi · Prediction Markets
+
+## PaulieB14 on APIs.io
+
+Everything profiled for PaulieB14 is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/graphadvocate-com/](https://apis.io/providers/graphadvocate-com/)** — or go straight to one of the APIs or properties below.
+
+### APIs (12)
+
+- [Graph Advocate MCP Server](https://apis.io/apis/graphadvocate-com/graph-advocate-mcp-server/) — Hosted MCP server at https://graphadvocate.com/mcp (Streamable HTTP for one-shot JSON-RPC initialize and tools/list; SSE session at /mcp/sse). tools/list…
+- [PaulieB14 Agent API](https://apis.io/apis/graphadvocate-com/graphadvocate-com-agent-api/) — The Agent API from PaulieB14 — 1 operation(s) for agent.
+- [PaulieB14 Ask API](https://apis.io/apis/graphadvocate-com/graphadvocate-com-ask-api/) — The Ask API from PaulieB14 — 1 operation(s) for ask.
+- [PaulieB14 Hyperliquid API](https://apis.io/apis/graphadvocate-com/graphadvocate-com-hyperliquid-api/) — The Hyperliquid API from PaulieB14 — 6 operation(s) for hyperliquid.
+- [PaulieB14 Kalshi API](https://apis.io/apis/graphadvocate-com/graphadvocate-com-kalshi-api/) — The Kalshi API from PaulieB14 — 2 operation(s) for kalshi.
+- [PaulieB14 Kalshi Polymarket API](https://apis.io/apis/graphadvocate-com/graphadvocate-com-kalshi-polymarket-api/) — The Kalshi Polymarket API from PaulieB14 — 1 operation(s) for kalshi polymarket.
+- [PaulieB14 Narrative API](https://apis.io/apis/graphadvocate-com/graphadvocate-com-narrative-api/) — The Narrative API from PaulieB14 — 1 operation(s) for narrative.
+- [PaulieB14 Onchain X402 API](https://apis.io/apis/graphadvocate-com/graphadvocate-com-onchain-x402-api/) — The Onchain X402 API from PaulieB14 — 1 operation(s) for onchain x402.
+- [PaulieB14 Polymarket API](https://apis.io/apis/graphadvocate-com/graphadvocate-com-polymarket-api/) — The Polymarket API from PaulieB14 — 5 operation(s) for polymarket.
+- [PaulieB14 Predmarket API](https://apis.io/apis/graphadvocate-com/graphadvocate-com-predmarket-api/) — The Predmarket API from PaulieB14 — 1 operation(s) for predmarket.
+- [PaulieB14 Route API](https://apis.io/apis/graphadvocate-com/graphadvocate-com-route-api/) — The Route API from PaulieB14 — 1 operation(s) for route.
+- [PaulieB14 Uniswap API](https://apis.io/apis/graphadvocate-com/graphadvocate-com-uniswap-api/) — The Uniswap API from PaulieB14 — 3 operation(s) for uniswap.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [graph-advocate-mcp](https://apis.io/servers/graphadvocate-com/graph-advocate-mcp/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Graphadvocate Com Agentic Access](https://apis.io/agentic-access/graphadvocate-com/graphadvocate-com-agentic-access/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Graphadvocate Com Openapi Overlay](https://apis.io/overlays/graphadvocate-com/graphadvocate-com-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Graphadvocate Com Authentication](https://apis.io/security/graphadvocate-com/graphadvocate-com-authentication/)
+- [Graphadvocate Com Domain Security](https://apis.io/security/graphadvocate-com/graphadvocate-com-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Graphadvocate Com Plans Pricing](https://apis.io/plans/graphadvocate-com/graphadvocate-com-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Graphadvocate Com Rate Limits](https://apis.io/rate-limits/graphadvocate-com/graphadvocate-com-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://graphadvocate.com/)
+- [Documentation](https://docs.graphadvocate.com/)
+- [Getting started](https://docs.graphadvocate.com/quickstart)
+- [API reference](https://graphadvocate.com/openapi.json)
+- [Pricing](https://docs.graphadvocate.com/route)
+- [GitHub](https://github.com/PaulieB14)
+
+## API Evangelist rating
+
+**Kin Score 41.9** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 47.1 |
+| Contract governance | 18.2 |
+| Operational transparency | 13.2 |
+| Developer ergonomics | 64.3 |
+| Access clarity | 31.6 |
+
+**Agent readiness 34.7** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | conformant |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/graphadvocate-com/](https://apis.io/providers/graphadvocate-com/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for PaulieB14: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/graphadvocate-com/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
